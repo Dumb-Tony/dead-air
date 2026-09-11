@@ -2,7 +2,19 @@
 
 September 11, 2026
 
-## v0.2 validation — September 11, 2026
+## v0.3 validation — September 11, 2026
+
+`node tests/check.mjs` — **44 checks passed**. New regressions cover capture-only clicks, firing while captured, return from journal, unlocked right clicks, water-level progression/clamping, fallback wall orientation, 3D shot height and full navigation using the 3D shooting contract.
+
+The navigation driver completed the expedition with enemies active under both rendering contracts. The 3D shot contract completed in 131 simulated seconds using 5 shots and stopping 3 threats; the driver chooses headings and accurate aim, so this remains an integration check rather than a human difficulty assessment.
+
+Local in-app browser visual review confirmed WebGL initialization at 1280×720, readable maintenance/archive/pump signage, modeled scenery, flooded and half-drained archive water, the cleared archive floor, full/empty sump states, and the pump's 0%/100% drainage display. The read-only game diagnostics confirmed the WebGL renderer and water levels. No warning or error logs were returned during these checks.
+
+The exact reported input sequence was exercised in the browser: read a maintenance memo, return from the journal, click the game view. Ammunition remained 8/12 and the HUD remained QUIET. Space then reduced ammo to 7/12 and produced GUNSHOT feedback. Successful pointer capture is unavailable in this browser; the already-captured firing branch is covered by the automated regression.
+
+The local visual fixtures in `tests/preview.mjs` deliberately set camera/mission states for inspection. Those fixtures are not included in the playable HTML. Shader rendering, materials and water were visually reviewed; physics, audio listening quality and cross-GPU compatibility were not exhaustively playtested. The fallback has simpler visuals, and the environment remains a prototype rather than production art.
+
+## Historical v0.2 validation — September 11, 2026
 
 `node tests/check.mjs` — **36 checks passed** in Node 24.19.0.
 

@@ -11,7 +11,7 @@ function testRoute(destination){
 function testCombatTick(){
  const threats=state.enemies.filter(e=>e.hp>0&&dist(e,state.p)<6&&sees(state.p,e,6)).sort((a,b)=>dist(a,state.p)-dist(b,state.p));
  if(threats.length&&!safe(state.p)){
-  const e=threats[0];state.p.a=Math.atan2(e.y-state.p.y,e.x-state.p.x);lookPitch=e.type==='crawler'?.15:0;keys={};if(state.mag[state.gun]===0)reload();else fire();update(1/60);if(state.p.hp<45&&state.meds>0){state.meds--;state.p.hp=Math.min(100,state.p.hp+45);}return true;
+  const e=threats[0];state.p.a=Math.atan2(e.y-state.p.y,e.x-state.p.x);lookPitch=scene3D?(1.35-(e.type==='crawler'?.48:1.25))/(2*dist(e,state.p)):e.type==='crawler'?.15:0;keys={};if(state.mag[state.gun]===0)reload();else fire();update(1/60);if(state.p.hp<45&&state.meds>0){state.meds--;state.p.hp=Math.min(100,state.p.hp+45);}return true;
  }
  return false;
 }

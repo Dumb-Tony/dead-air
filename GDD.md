@@ -1,6 +1,6 @@
 # DEAD AIR — Game Design Document
 
-Version 0.2 · September 11, 2026 · Single-player survival FPS
+Version 0.3 · September 11, 2026 · Single-player survival FPS
 
 ## 1. Product and creative pillars
 
@@ -8,7 +8,7 @@ You are trapped beneath Relay Station 6 after an emergency transmission arrives 
 
 **Core promise:** deliberately make noise, survive its consequences, return with permanent progress. Three pillars: understandable acoustics; powerful but consequential combat; preparation that survives contact with the unexpected. Grounded industrial spaces contain one impossible phenomenon: a broadcast that knows things it should not.
 
-Full-campaign target: 4–6 hours, one authored interconnected station, no procedural map generation or compulsory grinding. This first delivery is a desktop, standalone, offline HTML 2.5D first-person prototype of one expedition, not the finished campaign or full 3D production art.
+Full-campaign target: 4–6 hours, one authored interconnected station, no procedural map generation or compulsory grinding. This first delivery is a desktop, standalone, offline HTML first-person prototype with 3D rendering and grid-based simulation of one expedition, not the finished campaign or full 3D production art.
 
 ## 2. Player loop
 
@@ -54,7 +54,7 @@ Objective state machine: find handle → install/start pump → drain → collec
 
 ## 8. Narrative and presentation
 
-Visual thesis: deep blue-green concrete, rusted steel, amber maintenance displays and emergency red lights. Retro 2.5D rendering intentionally supports single-file portability. Doors are visibly striped; terminals glow; machinery has a distinct silhouette. Gameplay brightness must allow routes and threats to be read without maximum display brightness. Flashlight increases visibility but is not a limited battery in the slice, avoiding attrition through necessary navigation.
+Visual thesis: deep blue-green concrete, rusted steel, amber maintenance displays and emergency red lights. The native WebGL renderer and all generated geometry/materials remain embedded in the single HTML file. Doors are visibly striped; terminals glow; machinery has a distinct silhouette. Gameplay brightness must allow routes and threats to be read without maximum display brightness. Flashlight increases visibility but is not a limited battery in the slice, avoiding attrition through necessary navigation.
 
 Procedural Web Audio provides machinery hum, gunshot transients, directional footsteps, door impacts and radio tones. Captions carry all plot-relevant announcements. No externally hosted assets, fonts or libraries. No recorded voice acting in v0.1; narrative audio is represented by radio tones and readable subtitles. Accessibility includes independent volume setting, captions, reduced flashes, keyboard-only fallback looking and a pauseable map. Full rebinding, gamepad and touch gameplay deferred.
 
@@ -68,7 +68,7 @@ No diegetic resurrection, randomized weapon jams or invisible emergency-supply s
 
 ## 10. Production architecture
 
-`dist/index.html` is the complete distributable: inline CSS, JavaScript, procedural world and audio. Canvas raycasting renders walls, doors, floor bands and depth-tested billboards. A fixed 1/60-second simulation avoids frame-rate-dependent movement and attacks. Grid pathfinding navigates enemies, weighted sound flood handles acoustics. Rendering does not determine collision or AI.
+`dist/index.html` is the complete distributable: inline CSS, JavaScript, procedural world and audio. Native WebGL renders modeled environments, fixtures and enemies with procedural materials, room lighting, flashlight illumination, fog and animated water. Canvas raycasting remains a compatibility fallback. A fixed 1/60-second simulation avoids frame-rate-dependent movement and attacks. Grid pathfinding navigates enemies, weighted sound flood handles acoustics. Rendering does not determine collision or AI.
 
 The source can be opened directly by double-clicking the HTML file. No Node, server, network, installers or build step required to play. Development checks use optional Node script `tests/check.mjs`. The public repository is https://github.com/Dumb-Tony/dead-air and the playable deployment is https://dumb-tony.github.io/dead-air/. Pushes to main run the checks and deploy dist through GitHub Actions. The original prototype history remains intact.
 
@@ -92,3 +92,14 @@ The presentation pass adds room-specific procedural concrete/metal textures, flo
 The save schema remains version 1 for compatibility; journal discoveries are an optional extension migrated on load. Invalid coordinates, timers, enemy targets, emitter data and journal IDs are rejected. Loading clears stale pump masking and camera/input transients. Doors refuse to close around the player or a living enemy.
 
 36 automated checks pass, including a complete expedition through normal movement and interactions with enemies active. Browser checks cover rendering, start/load, firing, movement, focused aim, minimap, journal, pause and setting persistence. See TEST-REPORT.md for limits. Human listening, multi-browser testing and first-time-player difficulty/playtime tuning remain M2 work; this release does not claim the full campaign is complete.
+
+
+## 14. v0.3 visual and input revision
+
+The main renderer uses true 3D geometry while preserving the original 2D collision, acoustic and navigation graph. Walls and ceilings are 2.8 world units high; the camera eye is 1.35 units above the floor, lowered for crouching. A wider default view, mipmapped materials, beveled equipment geometry, lighting and fog replace the flat billboard presentation. Three-dimensional shot-height checks match the camera; existing saves remain version 1.
+
+The flooded archive water level is 0.675 world units initially and falls with the actual drainage fraction. At completion the water surface is removed, exposing the floor. Observation windows between East Service and the archive show the change before entry is available. Windows remain solid acoustic/interaction boundaries. A recessed sump covered by walkable grating falls from -0.05 to -0.62 units; residual water remains at its bottom. The pump console reports drainage and water percentage. Water is a rendering of objective state, not a separate fluid simulation.
+
+Wall signage is modeled with consistent front-face texture coordinates. The raycast fallback also corrects side-dependent wall texture handedness and displays animated wet areas. If WebGL cannot initialize, the fallback remains playable with simpler graphics.
+
+An unlocked left click only attempts pointer capture and clears held fire. No shot, ammunition cost or acoustic event is generated. Once the pointer is already captured, left click fires and supports held fire; right click aims. Space fires without pointer capture and Z toggles aim. Returning from a journal/menu therefore cannot accidentally discharge the weapon.

@@ -13,7 +13,7 @@ const context=vm.createContext({console,document,window:{addEventListener(){}},H
 vm.runInContext(source,context);
 const run=code=>vm.runInContext(code,context);
 let passed=0;
-function test(name,fn){run('state=fresh(); maskField=null; mode="play"; keys={}; captions=[];');fn();console.log('PASS',name);passed++;}
+function test(name,fn){run('state=fresh(); resetTransient(); maskField=null; mode="play"; keys={}; captions=[];');fn();console.log('PASS',name);passed++;}
 test('single file: no external scripts, assets or fonts',()=>{assert(!/<script[^>]+src=/.test(html));assert(!/<link[^>]+href=/.test(html));assert(!/fetch\(/.test(source));});
 test('movement progresses without mouse capture or fullscreen',()=>{run('keys.KeyW=true; for(let i=0;i<60;i++)update(1/60)');assert(run('state.p.x')>7);});
 test('diagonal speed is normalized',()=>{const a=run('state.p={...state.p,x:5,y:18}; keys={KeyW:true}; update(.1);state.p.x-5');run('state=fresh();state.p={...state.p,x:5,y:18};keys={KeyW:true,KeyD:true};update(.1)');assert(Math.abs(run('Math.hypot(state.p.x-5,state.p.y-18)')-a)<.001);});
@@ -53,4 +53,13 @@ test('open maintenance airlock transmits sound normally',()=>{run('state.doors[0
 const navigation=fs.readFileSync(new URL('./navigation-check.js',import.meta.url),'utf8');
 test('navigated expedition with live enemies',()=>{console.log('Expedition result:',run(navigation));});
 test('vertical aim must intersect the visible enemy',()=>{run('state.p={...state.p,x:21.5,y:4.5,a:0};state.enemies[0].x=28.5;state.enemies[0].y=4.5;lookPitch=-.23;fire()');assert.equal(run('state.enemies[0].hp'),70);run('lookPitch=0;state.cooldown=0;fire()');assert.equal(run('state.enemies[0].hp'),35);});
+
+test('unlocked left click only requests capture and cannot spend ammunition',()=>{run('document.pointerLockElement=null;handleCanvasMouseDown({button:0,preventDefault(){}})');assert.equal(run('state.mag[0]'),8);assert.equal(run('state.shots'),0);assert.equal(run('noiseTimer'),0);assert.equal(run('keys.Mouse0'),false);});
+test('already captured left click fires and starts held fire',()=>{run('document.pointerLockElement=canvas;handleCanvasMouseDown({button:0,preventDefault(){}})');assert.equal(run('state.mag[0]'),7);assert.equal(run('state.shots'),1);assert.equal(run('keys.Mouse0'),true);run('document.pointerLockElement=null');});
+test('returning from journal cannot shoot during recapture',()=>{run('openJournal();resume(false);document.pointerLockElement=null;handleCanvasMouseDown({button:0,preventDefault(){}});update(1/60)');assert.equal(run('state.shots'),0);assert.equal(run('state.mag[0]'),8);});
+test('unlocked right click neither aims nor fires',()=>{run('document.pointerLockElement=null;handleCanvasMouseDown({button:2,preventDefault(){}})');assert.equal(run('state.shots'),0);assert.equal(run('!!keys.Mouse2'),false);});
+test('visible water lowers monotonically and clamps at drainage bounds',()=>{const full=run('drainageVisual(0)'),half=run('drainageVisual(37.5)'),empty=run('drainageVisual(75)');assert(full.archiveLevel>half.archiveLevel&&half.archiveLevel>empty.archiveLevel);assert(full.sumpLevel>half.sumpLevel&&half.sumpLevel>empty.sumpLevel);assert.equal(empty.remaining,0);assert.equal(run('drainageVisual(99).remaining'),0);assert.equal(run('drainageVisual(-1).remaining'),1);});
+test('fallback wall texture orientation is corrected for opposite faces',()=>{assert.equal(run('wallU({u:.25,side:0},1,0)'),.75);assert.equal(run('wallU({u:.25,side:0},-1,0)'),.25);assert.equal(run('wallU({u:.25,side:1},0,-1)'),.75);assert.equal(run('wallU({u:.25,side:1},0,1)'),.25);});
+test('3D shot height rejects aiming over enemies and respects crouching',()=>{run('scene3D={name:"test"};state.enemies[0].x=10.5;state.enemies[0].y=4.5;lookPitch=-.23');assert.equal(run('aimIntersects(state.enemies[0])'),false);run('lookPitch=0;state.p.crouch=true');assert.equal(run('aimIntersects(state.enemies[0])'),true);run('scene3D=null;lookPitch=0');});
+test('complete navigation remains viable with the 3D shot contract',()=>{run('scene3D={name:"test"}');console.log('3D expedition result:',run(navigation));run('scene3D=null');});
 console.log(`\n${passed} checks passed. Simulation checks do not replace browser/listening playtests.`);
