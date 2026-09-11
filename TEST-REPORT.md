@@ -1,8 +1,30 @@
-# Validation — Dead Air v0.1
+# Validation — Dead Air
 
 September 11, 2026
 
-## Executed
+## v0.2 validation — September 11, 2026
+
+`node tests/check.mjs` — **36 checks passed** in Node 24.19.0.
+
+The original 21 checks remain. New checks cover minimap rendering without enemy reveals, journal discovery/persistence, legacy checkpoint loading, malformed save data, solid-wall save rejection, stale masking cleanup, maintenance door acoustic isolation/open transmission, enemy patrol/search expiry, doorway obstruction, focused-aim movement and vertical shot alignment.
+
+`tests/navigation-check.js` drives a complete expedition through ordinary movement, fixture interactions and combat with all enemies active. It does not teleport or disable enemies. The driver chooses headings and perfect aim, uses a medical kit if necessary, and knows the route. Result: completed in 131 simulated seconds, 6 shots, 3 threats stopped, returned to maintenance at 100 health. This establishes navigability and objective integration, **not** realistic first-time-player timing, difficulty or combat feel.
+
+Local browser checks in the Codex in-app browser verified:
+
+- Title screen and game load; existing checkpoint loads.
+- Textured room, weapon and persistent unlabeled minimap render correctly.
+- Space fires immediately (ammunition visibly decreased from 8 to 7).
+- Keyboard movement advances the player; the live read-only game diagnostics confirmed changed coordinates.
+- Z changes to focused aim with centered equipment and narrower view.
+- J opens the journal and pauses; Escape opens pause/settings.
+- Brightness 115 and reduced motion enabled persisted after reload.
+- No warning/error entries were returned by the browser log checks.
+
+The in-app browser cannot acquire pointer lock, so real captured-mouse yaw/pitch and right-button aim need normal desktop-browser playtesting. Keyboard fallback starts and runs without capture. Audio synthesis initializes without observed errors, but listening quality was not assessed. No claim of a full browser combat playthrough or cross-browser performance validation is made.
+
+
+## Historical v0.1 validation
 
 `node tests/check.mjs` — 21 checks passed in Node 24.19.0.
 

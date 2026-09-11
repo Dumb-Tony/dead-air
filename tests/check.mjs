@@ -5,9 +5,9 @@ const html=fs.readFileSync(new URL('../dist/index.html',import.meta.url),'utf8')
 const source=html.match(/<script>([\s\S]*?)<\/script>/)[1];
 new vm.Script(source);
 const gradient={addColorStop(){}};
-const ctx=new Proxy({createLinearGradient:()=>gradient,createRadialGradient:()=>gradient},{get(o,k){return k in o?o[k]:()=>{};}});
+const ctx=new Proxy({createImageData:(w,h)=>({data:new Uint8ClampedArray(w*h*4),width:w,height:h}),createLinearGradient:()=>gradient,createRadialGradient:()=>gradient},{get(o,k){return k in o?o[k]:()=>{};}});
 const elements=new Map();
-function el(id){if(!elements.has(id))elements.set(id,{id,value:id==='volume'?'55':'4',checked:id==='captionSetting',classList:{add(){},remove(){},toggle(){}},style:{},getContext:()=>ctx,addEventListener(){},replaceChildren(){},requestPointerLock:()=>Promise.resolve(),width:800,height:450});return elements.get(id);}
+function el(id){if(!elements.has(id))elements.set(id,{id,value:id==='volume'?'55':id==='brightness'?'105':'4',checked:id==='captionSetting',classList:{add(){},remove(){},toggle(){}},style:{},getContext:()=>ctx,addEventListener(){},replaceChildren(){},append(){},focus(){},requestPointerLock:()=>Promise.resolve(),width:800,height:450});return elements.get(id);}
 const storage=new Map(),document={getElementById:el,createElement:()=>({...el('dummy'),style:{}}),addEventListener(){},pointerLockElement:null,hidden:false};
 const context=vm.createContext({console,document,window:{addEventListener(){}},HTMLInputElement:class{},requestAnimationFrame(){},localStorage:{getItem:k=>storage.get(k)||null,setItem:(k,v)=>storage.set(k,v)},confirm:()=>true,Float32Array,Math,JSON,Map,Promise});
 vm.runInContext(source,context);
@@ -35,4 +35,22 @@ test('invalid saved state rejected',()=>{assert.equal(run('valid({version:1})'),
 test('safe room blocks enemy routing',()=>{assert.equal(run('route(state.enemies[0],{x:5.5,y:4.5}).length'),0);});
 test('all objective rooms connected with unlocked doors',()=>{assert(run('state.doors.forEach(d=>{d.locked=false;d.open=true;d.safe=false});route({x:10.5,y:4.5},{x:28.5,y:22.5}).length')>0);assert(run('route({x:10.5,y:4.5},{x:5.5,y:19.5}).length')>0);assert(run('route({x:5.5,y:19.5},{x:28.5,y:3.5}).length')>0);});
 test('render routine and HUD execute against canvas contract',()=>{run('draw();drawMap()');assert.equal(typeof el('objective').textContent,'string');});
+test('minimap renders without showing enemy positions',()=>{run('drawMinimap()');const mini=source.slice(source.indexOf('function drawMinimap(){'),source.indexOf('function drawMap(){'));assert(!mini.includes('state.enemies'));});
+test('journal reading records discoveries and pauses simulation mode',()=>{run('state.p={...state.p,x:6,y:2.5,a:0};interact()');assert.equal(run('mode'),'journal');assert.equal(run('state.notes.includes("note1")'),true);run('resume(false)');assert.equal(run('mode'),'play');});
+test('legacy checkpoint without journal remains loadable',()=>{run('delete state.notes;checkpoint=snapshot();loadSave()');assert.equal(run('Array.isArray(state.notes)'),true);assert.equal(run('valid(state)'),true);});
+test('malformed enemy target, missing cooldown and invalid emitter rejected',()=>{assert.equal(run('state.enemies[0].target={x:NaN,y:4};valid(state)'),false);assert.equal(run('state=fresh();delete state.cooldown;valid(state)'),false);assert.equal(run('state=fresh();state.emitters=[{x:2,y:2,type:"maker",delay:0,life:3,next:"bad"}];valid(state)'),false);});
+test('save cannot place player inside concrete',()=>{assert.equal(run('state.p.x=9.5;state.p.y=6.5;valid(state)'),false);});
+test('load clears stale pump masking before next simulation tick',()=>{run('checkpoint=snapshot();maskField=field(5.5,19.5,20);loadSave()');assert.equal(run('maskField'),null);});
+test('closed maintenance sanctuary does not broadcast gunfire to enemies',()=>{run('state.enemies[0].x=10.5;state.enemies[0].y=4.5;sound(8.5,4.5,35,"gunshot")');assert.equal(run('state.enemies[0].state'),'idle');});
+test('idle enemies begin authored local patrols',()=>{run('state.enemies[0].patrol=0;updateEnemies(.1)');assert.equal(run('state.enemies[0].state'),'patrol');assert(run('state.enemies[0].target')!==null);});
+test('search expires instead of refreshing indefinitely',()=>{run('state.enemies[0].x=22.5;state.enemies[0].state="search";state.enemies[0].lastHeard={x:24,y:5};state.enemies[0].target=null;state.enemies[0].memory=.1;updateEnemies(.2)');assert.equal(run('state.enemies[0].state'),'return');});
+test('door cannot close around the player',()=>{run('state.doors[0].open=true;state.p={...state.p,x:9.25,y:4.5,a:0};interact()');assert.equal(run('state.doors[0].open'),true);});
+test('journal notes survive checkpoint round-trip',()=>{run('state.notes=["note1"];save();state=fresh();loadSave()');assert.equal(run('state.notes[0]'),'note1');});
+
+
+test('aiming slows movement without preventing normalized control',()=>{run('aimToggle=true;keys.KeyW=true;update(.1)');assert(Math.abs(run('state.p.x-5.5')-.15275)<.001);run('aimToggle=false');});
+test('open maintenance airlock transmits sound normally',()=>{run('state.doors[0].open=true;state.enemies[0].x=10.5;state.enemies[0].y=4.5;sound(8.5,4.5,27,"gunshot")');assert.equal(run('state.enemies[0].state'),'investigate');});
+const navigation=fs.readFileSync(new URL('./navigation-check.js',import.meta.url),'utf8');
+test('navigated expedition with live enemies',()=>{console.log('Expedition result:',run(navigation));});
+test('vertical aim must intersect the visible enemy',()=>{run('state.p={...state.p,x:21.5,y:4.5,a:0};state.enemies[0].x=28.5;state.enemies[0].y=4.5;lookPitch=-.23;fire()');assert.equal(run('state.enemies[0].hp'),70);run('lookPitch=0;state.cooldown=0;fire()');assert.equal(run('state.enemies[0].hp'),35);});
 console.log(`\n${passed} checks passed. Simulation checks do not replace browser/listening playtests.`);
