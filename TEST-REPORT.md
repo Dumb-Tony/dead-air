@@ -10,7 +10,7 @@ Checks cover embedded JavaScript syntax, absence of external dependencies, movem
 
 The objective integration test operates the real interaction functions and advances simulation through pumping and its pause/resume. It places the player at fixtures and disables enemies to isolate objective correctness. It is **not** a full human or automated navigational combat playthrough.
 
-Canvas rendering is exercised against a mocked drawing interface, not visually inspected in a browser. Web Audio output, pointer-lock behavior, browser save compatibility and subjective difficulty remain unverified. The optional read-only WebMCP integration is feature-detected; no supported browser context was used to validate it.
+The simulation checks exercise canvas rendering against a mocked drawing interface. The deployed browser smoke test below additionally verifies visible rendering. Audio quality, successful pointer lock, save compatibility across browsers and subjective difficulty remain unverified. The optional read-only WebMCP integration was advertised by the test browser but was not called.
 
 ## Next human checks
 
@@ -23,3 +23,9 @@ Canvas rendering is exercised against a mocked drawing interface, not visually i
 ## Scope caveats
 
 Retro 2.5D renderer, procedural materials/enemy billboards and synthesized sound. No full vertical geometry, voice acting, Mimic, Custodian, flashlight batteries, recorder, multiplayer or full campaign yet. Map pauses play. Desktop keyboard required.
+
+## GitHub Pages deployment smoke test
+
+September 11, 2026: https://dumb-tony.github.io/dead-air/ loaded in the Codex in-app desktop browser. Clicking **Begin expedition** dismissed the menu and rendered the maintenance room, weapon, objective, health and supplies. The **M** keyboard input opened the maintenance map. No warning or error entries were returned by the browser console log check. Mouse capture was unavailable in this browser; the game displayed its arrow-key fallback message and still started. Successful mouse capture and audible output were not verified.
+
+All 21 simulation checks also passed locally. GitHub Actions deployment run https://github.com/Dumb-Tony/dead-air/actions/runs/34564874252 completed successfully, including its game checks. The original prototype commit remains in the published Git history, and `dist/index.html` is unchanged from that commit. This was a load/start/map smoke test, not a full combat playthrough.
