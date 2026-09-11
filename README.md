@@ -10,22 +10,27 @@ WASD move · mouse/left-right arrows look · Shift sprint · C crouch · E inter
 
 Find the handle in Lockers, start the West Pump, survive 75 seconds of running machinery, retrieve the archive schematic and return to the maintenance terminal. You may stop/resume the pump. Maintenance heals and saves but does not refill ammunition.
 
-## Save on your Windows PC
+## Published game and source
 
-Extract the project ZIP into your chosen `GPT_DEV` folder, producing `GPT_DEV\Dead-Air\`. This chat's build environment cannot write directly to your Windows drive. The ZIP contains a local `.git` repository with committed source. In PowerShell, `git -C "C:\your\path\GPT_DEV\Dead-Air" status` verifies it (replace the example path with your actual folder).
+- Play online: https://dumb-tony.github.io/dead-air/
+- Public source repository: https://github.com/Dumb-Tony/dead-air
+- Standalone HTML: [dist/index.html](dist/index.html). Download it and open it locally to play offline.
 
-If your ZIP extractor omits the hidden `.git` directory, clone the supplied bundle instead: `git clone "C:\path\Dead-Air.git.bundle" "C:\your\path\GPT_DEV\Dead-Air"`. Use an empty destination. Git must be installed for Git commands; playing the HTML does not require Git.
+The project is extracted at `C:\GPT\_DEV\Dead-Air`, including the original Git history from `Dead-Air-Project.zip`. The original prototype commit is `85ac706da0f39363590b9137b9847b9f99ae0ccc`.
 
-## Publish to your own GitHub repository
+GitHub Pages is deployed by `.github/workflows/pages.yml` on pushes to `main`, or manually through GitHub Actions. The workflow runs `node tests/check.mjs` and uploads `dist` as the Pages site; there is no build step. `dist/index.html` remains the single source and portable game file.
 
-No GitHub repository was created by this delivery: the available connection lacked repository creation. In GitHub create an empty repository named `dead-air` (private is a safe initial choice), without adding README/license/gitignore. Then inside the extracted project run:
+To publish changes from PowerShell:
 
 ```powershell
-git remote add origin https://github.com/YOUR-USERNAME/dead-air.git
-git push -u origin main
+Set-Location 'C:\GPT\_DEV\Dead-Air'
+node tests/check.mjs
+git add dist/index.html README.md
+git commit -m "Update Dead Air"
+git push origin main
 ```
 
-Use your normal GitHub sign-in flow; never paste access tokens into chat. If a remote already exists, inspect `git remote -v` before changing it. No license has been assigned to your project.
+Wait for the **Deploy GitHub Pages** workflow to finish before checking the live game. Browser saves belong to the browser and origin; saves from a local HTML file do not automatically transfer to GitHub Pages. No license has been assigned to this project.
 
 ## Development
 
