@@ -1,0 +1,25 @@
+# Validation — Dead Air v0.1
+
+September 11, 2026
+
+## Executed
+
+`node tests/check.mjs` — 21 checks passed in Node 24.19.0.
+
+Checks cover embedded JavaScript syntax, absence of external dependencies, movement without pointer lock, diagonal normalization, door collision, acoustic attenuation, concrete obstruction, sound investigation, machinery masking, distinct Crawler hearing, pistol hit/stagger/kill, bullet obstruction, empty weapons, ammunition conservation, wedge recovery, archive gating, complete objective-state integration, checkpoint round-trip, invalid-save rejection, safe-room routing, objective-room connectivity, and renderer/HUD API execution.
+
+The objective integration test operates the real interaction functions and advances simulation through pumping and its pause/resume. It places the player at fixtures and disables enemies to isolate objective correctness. It is **not** a full human or automated navigational combat playthrough.
+
+Canvas rendering is exercised against a mocked drawing interface, not visually inspected in a browser. Web Audio output, pointer-lock behavior, browser save compatibility and subjective difficulty remain unverified. The optional read-only WebMCP integration is feature-detected; no supported browser context was used to validate it.
+
+## Next human checks
+
+1. Open `dist/index.html` locally in current Edge/Chrome/Firefox. Start without fullscreen. Verify mouse look, arrow-key fallback, Space fire and pause/resume.
+2. With comfortable headphone volume, compare an open versus closed fire door. Confirm footsteps become harder to locate around the pump.
+3. Finish the expedition through each approach, with enemies enabled. Confirm a bad shot can be recovered from by retreating.
+4. Save in maintenance, close/reopen the file, and load. Local file storage support depends on browser settings.
+5. Tune difficulty, readability, sound balance and playtime from observations before adding further campaign content.
+
+## Scope caveats
+
+Retro 2.5D renderer, procedural materials/enemy billboards and synthesized sound. No full vertical geometry, voice acting, Mimic, Custodian, flashlight batteries, recorder, multiplayer or full campaign yet. Map pauses play. Desktop keyboard required.

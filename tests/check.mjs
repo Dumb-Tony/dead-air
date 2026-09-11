@@ -1,0 +1,38 @@
+import fs from 'node:fs';
+import vm from 'node:vm';
+import assert from 'node:assert/strict';
+const html=fs.readFileSync(new URL('../dist/index.html',import.meta.url),'utf8');
+const source=html.match(/<script>([\s\S]*?)<\/script>/)[1];
+new vm.Script(source);
+const gradient={addColorStop(){}};
+const ctx=new Proxy({createLinearGradient:()=>gradient,createRadialGradient:()=>gradient},{get(o,k){return k in o?o[k]:()=>{};}});
+const elements=new Map();
+function el(id){if(!elements.has(id))elements.set(id,{id,value:id==='volume'?'55':'4',checked:id==='captionSetting',classList:{add(){},remove(){},toggle(){}},style:{},getContext:()=>ctx,addEventListener(){},replaceChildren(){},requestPointerLock:()=>Promise.resolve(),width:800,height:450});return elements.get(id);}
+const storage=new Map(),document={getElementById:el,createElement:()=>({...el('dummy'),style:{}}),addEventListener(){},pointerLockElement:null,hidden:false};
+const context=vm.createContext({console,document,window:{addEventListener(){}},HTMLInputElement:class{},requestAnimationFrame(){},localStorage:{getItem:k=>storage.get(k)||null,setItem:(k,v)=>storage.set(k,v)},confirm:()=>true,Float32Array,Math,JSON,Map,Promise});
+vm.runInContext(source,context);
+const run=code=>vm.runInContext(code,context);
+let passed=0;
+function test(name,fn){run('state=fresh(); maskField=null; mode="play"; keys={}; captions=[];');fn();console.log('PASS',name);passed++;}
+test('single file: no external scripts, assets or fonts',()=>{assert(!/<script[^>]+src=/.test(html));assert(!/<link[^>]+href=/.test(html));assert(!/fetch\(/.test(source));});
+test('movement progresses without mouse capture or fullscreen',()=>{run('keys.KeyW=true; for(let i=0;i<60;i++)update(1/60)');assert(run('state.p.x')>7);});
+test('diagonal speed is normalized',()=>{const a=run('state.p={...state.p,x:5,y:18}; keys={KeyW:true}; update(.1);state.p.x-5');run('state=fresh();state.p={...state.p,x:5,y:18};keys={KeyW:true,KeyD:true};update(.1)');assert(Math.abs(run('Math.hypot(state.p.x-5,state.p.y-18)')-a)<.001);});
+test('closed door blocks player collision',()=>{run('state.p.x=8.7;state.p.y=4.5;keys.KeyW=true;for(let i=0;i<120;i++)update(1/60)');assert(run('state.p.x')<9);});
+test('closed heavy door attenuates sound more than open',()=>{const closed=run('received(field(8.5,4.5,25),{x:10.5,y:4.5})');const open=run('state.doors[0].open=true;received(field(8.5,4.5,25),{x:10.5,y:4.5})');assert(open-closed>=9);});
+test('concrete blocks direct sound propagation',()=>{assert(run('received(field(7.5,6.5,5),{x:7.5,y:13.5})')<0);});
+test('nearby Listener investigates sound origin',()=>{run('state.enemies[0].x=23.5;state.enemies[0].y=4.5;sound(26.5,4.5,12,"bottle")');assert.equal(run('state.enemies[0].state'),'investigate');assert.equal(run('state.enemies[0].target.x'),26.5);});
+test('pump masking suppresses quieter footsteps',()=>{run('const e=state.enemies[1];e.x=6.5;e.y=19.5;maskField=field(5.5,19.5,20);sound(7.5,19.5,5,"footstep")');assert.equal(run('state.enemies[1].state'),'idle');run('sound(7.5,19.5,27,"gunshot")');assert.equal(run('state.enemies[1].state'),'investigate');});
+test('Crawler ignores steps but responds to machinery',()=>{run('state.enemies[3].x=6.5;state.enemies[3].y=19.5;sound(5.5,19.5,20,"footstep")');assert.equal(run('state.enemies[3].state'),'idle');run('sound(5.5,19.5,20,"machinery")');assert.equal(run('state.enemies[3].state'),'investigate');});
+test('pistol hits, staggers and kills in two shots',()=>{run('state.p={...state.p,x:23.5,y:4.5,a:0};state.enemies[0].x=25.5;state.enemies[0].y=4.5;fire()');assert.equal(run('state.enemies[0].hp'),35);assert.equal(run('state.enemies[0].stagger'),.5);run('state.cooldown=0;fire()');assert.equal(run('state.enemies[0].hp'),0);assert.equal(run('state.mag[0]'),6);});
+test('closed door blocks bullets',()=>{run('state.p={...state.p,x:17.5,y:4.5,a:0};state.enemies[0].x=20.5;state.enemies[0].y=4.5;fire()');assert.equal(run('state.enemies[0].hp'),70);});
+test('empty trigger spends no ammo and sends no gunshot',()=>{run('state.mag[0]=0;fire()');assert.equal(run('state.mag[0]'),0);assert.equal(run('state.shots'),0);});
+test('reload conserves remaining magazine ammo',()=>{run('state.mag[0]=5;state.reserve[0]=2;reload();for(let i=0;i<80;i++)update(1/60)');assert.equal(run('state.mag[0]'),7);assert.equal(run('state.reserve[0]'),0);});
+test('wedge can be placed and recovered',()=>{run('state.p={...state.p,x:8,y:4.5,a:0};wedge()');assert.equal(run('state.wedges'),2);assert.equal(run('state.doors[0].wedged'),true);run('wedge()');assert.equal(run('state.wedges'),3);});
+test('locked archive cannot be entered before drainage',()=>{run('state.p={...state.p,x:25.5,y:13,a:Math.PI/2};interact()');assert.equal(run('state.doors.find(d=>d.x===25&&d.y===14).open'),false);});
+test('objective integration: handle, pump, pause, drain, schematic, return',()=>{run('state.enemies.forEach(e=>e.hp=0);state.p={...state.p,x:27,y:3.5,a:0};interact()');assert.equal(run('state.handle'),true);run('state.p={...state.p,x:5.5,y:18,a:Math.PI/2};interact();for(let i=0;i<600;i++)update(1/60);interact()');assert.equal(run('state.running'),false);const progress=run('state.drain');run('for(let i=0;i<120;i++)update(1/60)');assert.equal(run('state.drain'),progress);run('interact();for(let i=0;i<4000;i++)update(1/60)');assert.equal(run('state.drain'),75);assert.equal(run('state.doors.filter(d=>d.archive&&d.locked).length'),0);run('state.p={...state.p,x:27,y:22.5,a:0};interact()');assert.equal(run('state.schematic'),true);run('state.p={...state.p,x:5,y:3.5,a:Math.PI};interact()');assert.equal(run('state.won'),true);assert.equal(run('mode'),'complete');});
+test('checkpoint round-trip restores progress and equipment',()=>{run('state.handle=true;state.mag[0]=3;state.doors[1].open=true;save();state=fresh();loadSave()');assert.equal(run('state.handle'),true);assert.equal(run('state.mag[0]'),3);assert.equal(run('state.doors[1].open'),true);});
+test('invalid saved state rejected',()=>{assert.equal(run('valid({version:1})'),false);assert.equal(run('state.mag[0]=-2;valid(state)'),false);});
+test('safe room blocks enemy routing',()=>{assert.equal(run('route(state.enemies[0],{x:5.5,y:4.5}).length'),0);});
+test('all objective rooms connected with unlocked doors',()=>{assert(run('state.doors.forEach(d=>{d.locked=false;d.open=true;d.safe=false});route({x:10.5,y:4.5},{x:28.5,y:22.5}).length')>0);assert(run('route({x:10.5,y:4.5},{x:5.5,y:19.5}).length')>0);assert(run('route({x:5.5,y:19.5},{x:28.5,y:3.5}).length')>0);});
+test('render routine and HUD execute against canvas contract',()=>{run('draw();drawMap()');assert.equal(typeof el('objective').textContent,'string');});
+console.log(`\n${passed} checks passed. Simulation checks do not replace browser/listening playtests.`);
