@@ -1,6 +1,18 @@
 # DEAD AIR — Game Design Document
 
-Version 0.4 · September 11, 2026 · Single-player zombie action FPS
+Version 0.5 · September 11, 2026 · Single-player zombie action FPS
+
+## Current campaign scope — v0.5
+
+Four playable chapters now form a complete local story arc: West Pump, Ventilation Works, Power Exchange and Transmission Chamber. Alex Vale returns after a call from sister Mara; the player uncovers ECHO's voice reconstruction and carrier while advancing through machinery puzzles. See STORY.md for narrative continuity. Three opening cards are skippable; each floor has three optional records and a mandatory debrief carrying its main revelation.
+
+Three additional authored room/corridor layouts are loaded through chapter-aware level definitions. Collision, acoustics, AI routing, map labels, fixture definitions, checkpoints and WebGL geometry all switch with the active chapter. Old West Pump saves are migrated without resetting mission progress. Completed old saves offer the next chapter.
+
+Puzzles: West Pump retains its 50-second drainage loop. Ventilation requires a filter plus two dampers before a 30-second purge. Power Exchange requires relay order TWO, ONE, THREE before retrieving the lift core. Transmission requires three isolators before a 40-second erasure and surface extraction. Gates enforce each floor's prerequisites. The zombie roster totals 76 across four chapters, with no infinite spawns.
+
+Chapter transitions retain weapons, ammo and cumulative counters, reset local puzzle state, heal, apply a documented minimum supply reserve and create a checkpoint. Each completed chapter records time, shots and kills. GPU buffers, textures and programs are released when rebuilding the renderer for another floor. The single-file offline format remains mandatory.
+
+The following original design sections describe West Pump and historical expansion ideas where they conflict with the current campaign above. No four-to-six-hour playtime claim is made for v0.5.
 
 ## 1. Product and creative pillars
 

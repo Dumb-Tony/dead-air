@@ -2,6 +2,14 @@
 
 September 11, 2026
 
+## v0.5 campaign validation — September 12, 2026
+
+60 checks pass. Added coverage includes distinct floor layouts and valid enemy placement, ventilation prerequisites/pause/resume, relay order reset and gates, final erasure/extraction locks, map-aware checkpoint validation and loading, invalid campaign metadata, resource/counter carryover, skippable opening and legacy completed-save continuation.
+
+The navigation driver completed all four chapters continuously with enemies active, using both canvas and 3D aiming contracts. West Pump took 87 simulated seconds; subsequent chapters took 63, 33 and 73 seconds, using 20, 24 and 22 shots and stopping 18, 20 and 24 zombies. The driver knows the route, aims accurately, heals when needed and switches weapons when empty; these are integration results, not human playtime or difficulty claims.
+
+Local browser review checked the opening cards, entry into gameplay, first debrief and Continue transition, WebGL Ventilation startup, Power Exchange map, final chapter startup and ending. No browser errors were returned in those checks. Review fixtures freeze enemies and set state; they are excluded from the shipped HTML. Normal gameplay remains tested separately. Cross-GPU performance, audio listening and extended first-time human playtests remain open.
+
 ## v0.4.1 visual validation — September 12, 2026
 
 The existing 49 gameplay regressions pass. Local WebGL review at 1280×720 inspected pistol, shotgun, aimed view, firing/reload controls, the three zombie classes and all four portable supply types. No browser warning/error logs were returned. The aimed shotgun stock initially obstructed the view and was corrected before release. Local equipment and supply fixtures are excluded from the distributable. This is a procedural-art update, not a change to combat balance or level layout; the canvas fallback retains its simpler assets. Cross-GPU and extended human playtesting remain open.

@@ -1,6 +1,6 @@
-# Dead Air — Quarantine Breach v0.4.1
+# Dead Air — The Relay Campaign v0.5
 
-A standalone fast-paced retro zombie FPS with environmental puzzles. Read `GDD.md` for design, scope and deferred features.
+A standalone four-chapter retro zombie FPS with environmental puzzles and a connected story. Read `GDD.md` for design, scope and deferred features.
 
 ## Play
 
@@ -9,6 +9,23 @@ Open `dist/index.html` in Chrome, Edge or Firefox on a desktop. Nothing to insta
 WASD move · mouse/arrow keys look · Shift sprint · C crouch · E interact · click/Space fire (hold for repeated fire) · right-click/Z aim · R reload · 1/2 weapons · Q bottle · G delayed noisemaker · V door wedge · H heal · F light · M full map · J journal · Esc pause/resume.
 
 Find the handle in Lockers, start the West Pump, survive 50 seconds of running machinery, retrieve the archive schematic and return to the maintenance terminal. You may stop/resume the pump. Maintenance heals and saves but does not refill ammunition.
+
+## Four-chapter campaign
+
+You play Alex Vale, an emergency technician returning to Relay Station 6 after a distress call from your sister Mara. The quarantine has failed, the staff are dead, and the PA is speaking in your voice. A skippable opening briefing explains your arrival; twelve discoverable records and chapter-ending scenes reveal what happened. [STORY.md](STORY.md) contains the complete narrative and spoilers.
+
+| Chapter | Goal | Starting zombies |
+| --- | --- | ---: |
+| West Pump | Recover the breaker, drain the archive, find the route | 14 |
+| Ventilation Works | Recover a filter, set intake/exhaust, purge the shaft | 18 |
+| Power Exchange | Synchronize relays TWO → ONE → THREE, retrieve a power core | 20 |
+| Transmission Chamber | Isolate three feeds, erase the carrier, reach extraction | 24 |
+
+The three new floors have distinct authored layouts, room signs, map labels and lighting. Ventilation's purge takes 30 running seconds; the final erasure takes 40. Both can pause and resume. The relay puzzle resets its sequence after a wrong input without consuming a resource.
+
+At chapter completion choose **Continue**. Weapons, remaining ammunition and campaign counters carry forward. Each new chapter heals you and provides a minimum reserve of 48 pistol rounds, 12 shells, one medkit, three bottles, two noisemakers and two wedges. Supplies are finite within each floor. Arrival checkpoints and completed-chapter checkpoints preserve progress; medical terminals heal and save. Death restores the last checkpoint, not every recent action.
+
+Old West Pump checkpoints remain compatible, including completed ones: load the save and continue to Ventilation Works. Start a new campaign to see the opening and use the fourteen-zombie first-floor layout. New saves remember their chapter, puzzle progress, equipment and completed-chapter statistics. The game remains a single offline HTML file; the canvas fallback is supported with simpler artwork.
 
 ## Visual update v0.4.1
 
@@ -71,7 +88,9 @@ Wait for the **Deploy GitHub Pages** workflow to finish before checking the live
 
 ## Development
 
-Edit `dist/index.html`; no build step. Optional checks: `node tests/check.mjs` (49 checks, including an expedition navigated with enemies active). See `TEST-REPORT.md` for actual validation and limitations. This is a 2.5D prototype, not the full four-to-six-hour campaign.
+Edit `dist/index.html`; no build step. Optional checks: `node tests/check.mjs` (60 checks, including an expedition navigated with enemies active). See `TEST-REPORT.md` for actual validation and limitations. This is a four-chapter playable campaign slice; a four-to-six-hour playtime has not been established.
 
 
 For local visual review, run `node tests/preview.mjs` and open http://127.0.0.1:4174/. Named local-only fixtures include `?review=archive-full`, `archive-half`, `archive-empty`, `pump-full`, `pump-empty`, `maintenance-sign` and `lockers`. These review states are injected by the local server and are not present in the standalone game or Pages deployment.
+
+New local visual fixtures: `?review=chapter1` through `chapter4`, with `-complete` for each debrief. These inject review states only in the local preview server.
