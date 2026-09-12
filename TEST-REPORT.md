@@ -2,6 +2,10 @@
 
 September 11, 2026
 
+## v0.4.1 visual validation — September 12, 2026
+
+The existing 49 gameplay regressions pass. Local WebGL review at 1280×720 inspected pistol, shotgun, aimed view, firing/reload controls, the three zombie classes and all four portable supply types. No browser warning/error logs were returned. The aimed shotgun stock initially obstructed the view and was corrected before release. Local equipment and supply fixtures are excluded from the distributable. This is a procedural-art update, not a change to combat balance or level layout; the canvas fallback retains its simpler assets. Cross-GPU and extended human playtesting remain open.
+
 ## v0.4 validation — September 11, 2026
 
 49 automated checks pass. New regressions cover the fourteen-zombie roster, three-target shotgun spread using one shell, automatic empty-trigger reload, four-monster checkpoint conversion, and the 50-second pump cycle. Existing mouse capture, journal return, minimap, water, collision, save and objective checks remain.

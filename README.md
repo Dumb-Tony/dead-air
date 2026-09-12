@@ -1,4 +1,4 @@
-# Dead Air — Quarantine Breach v0.4
+# Dead Air — Quarantine Breach v0.4.1
 
 A standalone fast-paced retro zombie FPS with environmental puzzles. Read `GDD.md` for design, scope and deferred features.
 
@@ -9,6 +9,12 @@ Open `dist/index.html` in Chrome, Edge or Firefox on a desktop. Nothing to insta
 WASD move · mouse/arrow keys look · Shift sprint · C crouch · E interact · click/Space fire (hold for repeated fire) · right-click/Z aim · R reload · 1/2 weapons · Q bottle · G delayed noisemaker · V door wedge · H heal · F light · M full map · J journal · Esc pause/resume.
 
 Find the handle in Lockers, start the West Pump, survive 50 seconds of running machinery, retrieve the archive schematic and return to the maintenance terminal. You may stop/resume the pump. Maintenance heals and saves but does not refill ammunition.
+
+## Visual update v0.4.1
+
+Detailed, distinct pistol and shotgun models now include sights, barrels, grip textures, gloved hands, a moving pistol slide and shotgun fore-end. The world shotgun uses the same geometry. Ammo cartridges, shells, a strapped medical bag and a shaped breaker handle replace the generic pickup silhouettes.
+
+Zombies have tapered uniform torsos, pockets, belts, heavy armor, reflective runner strips, facial geometry, hair/helmet variants and corrected horizontal corpse poses. This pass changes WebGL presentation; the environment, combat tuning, puzzles and save format remain the same. The simpler canvas fallback remains available.
 
 ## What changed in v0.4
 

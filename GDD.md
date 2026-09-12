@@ -110,3 +110,8 @@ An unlocked left click only attempts pointer capture and clears held fire. No sh
 Quarantine Breach shifts the slice toward Doom/Wolfenstein-style pace while retaining the industrial story and puzzle route. WebGL zombies have articulated limbs, rounded heads, curved facial textures, wounds, differing uniforms, and distinct heavy silhouettes. Warmer lamps, quarantine signage, hazard thresholds, blood decals and electrical panels reinforce the setting. The HUD adds a kill count. Water, readable signs and the unlabeled minimap remain.
 
 Save version 1 remains readable: four-enemy legacy saves migrate listener to shambler and crawler to runner without resetting mission state or reviving kills. New expeditions use fourteen enemies. The game remains one offline HTML file with synthesized audio and procedural assets.
+
+
+## v0.4.1 equipment and undead art
+
+Shared procedural weapon geometry renders held equipment and the shotgun pickup. Pistol slide and shotgun fore-end motion follow existing recoil; reload timing and damage are unchanged. Gloved hands, textured grips, separate barrels/tubes and sights reinforce weapon identity. Supplies have dedicated geometry. Zombies use tapered torsos, layered uniform detail, modeled facial features and correctly oriented corpse meshes. All meshes and textures are generated inside the standalone HTML.

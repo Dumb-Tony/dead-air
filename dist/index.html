@@ -15,7 +15,7 @@
 </style></head><body>
 <canvas id="scene3d" aria-hidden="true"></canvas><div id="viewEffects" aria-hidden="true"></div><canvas id="view" aria-label="First-person view of Relay Station 6"></canvas>
 <div id="hud" class="hidden"><div class="top"><div><div class="label">RELAY 06 / WEST PUMP</div><div id="objective"></div><div id="pumpbar"><div id="pumpfill"></div></div></div><div id="navigation"><canvas id="minimap" width="272" height="216" aria-label="Facility minimap showing your position, doors and fixtures"></canvas><div id="room"></div></div></div><div id="cross"><i></i></div><div id="combatReadout"><span id="killCount">0</span><small>UNDEAD DOWN</small></div><div id="bearing">N</div><div id="soundMeter"><span>ACOUSTIC SIGNATURE</span><div><b id="soundLevel"></b></div><small id="soundHint">Keep your distance. Listen.</small></div><div id="toast" role="status"></div><div id="prompt"></div><div id="captions" aria-live="polite"></div><div id="bottom"><div><div class="stats"><div><div class="label">VITALS</div><div id="health" class="value"></div></div><div><div class="label" id="weapon"></div><div id="ammo" class="value"></div></div></div><div id="inventory"></div></div><div class="small">E interact · J journal · M map<br><span id="noise"></span></div></div></div>
-<div id="veil"><div class="panel"><div class="eyebrow">RELAY STATION 6 <span class="signal-tag">● QUARANTINE BREACHED</span></div><div class="menu-rule">CONTAINMENT FAILURE / SUBLEVEL 04</div><h1 id="title">DEAD AIR</h1><div class="build-label">01 / QUARANTINE BREACH</div><p class="intro" id="intro">The dead have breached Relay Station 6. Fight through the service level, restore the pumps, and recover the route to the surface. Keep moving. Finish the job.</p><p class="quote" id="quote">“Do not let me reach the transmitter.”</p><div class="actions"><button id="begin" class="primary">Begin expedition</button><button id="load">Load checkpoint</button><button id="restart" class="hidden">New expedition</button></div><div class="controls"><div><b>WASD</b> Move · <b>Mouse / arrow keys</b> Look</div><div><b>Click / Space</b> Fire · <b>Right click / Z</b> Aim</div><div><b>E</b> Interact · <b>V</b> Wedge · <b>R</b> Reload · <b>1 / 2</b> Weapons</div><div><b>Shift</b> Sprint · <b>C</b> Crouch · <b>F</b> Light</div><div><b>Q</b> Throw bottle · <b>G</b> Delayed noisemaker</div><div><b>H</b> Heal · <b>M</b> Map · <b>Esc</b> Pause · <b>J</b> Journal</div></div><details><summary>Audio, comfort & mouse settings</summary><div id="settings"><label>Volume <input id="volume" type="range" min="0" max="100" value="55"></label><label>Sensitivity <input id="sensitivity" type="range" min="1" max="10" value="4"></label><label><input id="captionSetting" type="checkbox" checked>Directional sound captions</label><label><input id="flashSetting" type="checkbox">Reduce flashes</label><label><input id="motionSetting" type="checkbox">Reduce motion</label><label>Brightness <input id="brightness" type="range" min="70" max="140" value="105"></label></div></details><p class="small">Desktop keyboard required. Headphones recommended. No installation or internet needed.<br>Quarantine breach · v0.4 · Checkpoints save in this browser when available.</p></div></div>
+<div id="veil"><div class="panel"><div class="eyebrow">RELAY STATION 6 <span class="signal-tag">● QUARANTINE BREACHED</span></div><div class="menu-rule">CONTAINMENT FAILURE / SUBLEVEL 04</div><h1 id="title">DEAD AIR</h1><div class="build-label">01 / QUARANTINE BREACH</div><p class="intro" id="intro">The dead have breached Relay Station 6. Fight through the service level, restore the pumps, and recover the route to the surface. Keep moving. Finish the job.</p><p class="quote" id="quote">“Do not let me reach the transmitter.”</p><div class="actions"><button id="begin" class="primary">Begin expedition</button><button id="load">Load checkpoint</button><button id="restart" class="hidden">New expedition</button></div><div class="controls"><div><b>WASD</b> Move · <b>Mouse / arrow keys</b> Look</div><div><b>Click / Space</b> Fire · <b>Right click / Z</b> Aim</div><div><b>E</b> Interact · <b>V</b> Wedge · <b>R</b> Reload · <b>1 / 2</b> Weapons</div><div><b>Shift</b> Sprint · <b>C</b> Crouch · <b>F</b> Light</div><div><b>Q</b> Throw bottle · <b>G</b> Delayed noisemaker</div><div><b>H</b> Heal · <b>M</b> Map · <b>Esc</b> Pause · <b>J</b> Journal</div></div><details><summary>Audio, comfort & mouse settings</summary><div id="settings"><label>Volume <input id="volume" type="range" min="0" max="100" value="55"></label><label>Sensitivity <input id="sensitivity" type="range" min="1" max="10" value="4"></label><label><input id="captionSetting" type="checkbox" checked>Directional sound captions</label><label><input id="flashSetting" type="checkbox">Reduce flashes</label><label><input id="motionSetting" type="checkbox">Reduce motion</label><label>Brightness <input id="brightness" type="range" min="70" max="140" value="105"></label></div></details><p class="small">Desktop keyboard required. Headphones recommended. No installation or internet needed.<br>Quarantine breach · v0.4.1 · Checkpoints save in this browser when available.</p></div></div>
 <div id="mapLayer"><div class="eyebrow">RELAY 06 / MAINTENANCE PLAN</div><h2>West service level</h2><canvas id="mapCanvas" width="850" height="675"></canvas><p>Amber: objective fixtures · Teal: doors · Red: locked bulkhead · Triangle: you<br>Noise follows open passages. Close heavy doors to contain it. The pump covers footsteps, not nearby gunfire. Map pauses the expedition.</p><button id="closeMap">Return to expedition [M]</button></div>
 <div id="journalLayer" class="hidden" role="dialog" aria-modal="true" aria-labelledby="journalTitle"><div class="journal-panel"><div class="eyebrow">RELAY 06 / FIELD RECORD</div><h2 id="journalTitle">Expedition journal</h2><div id="journalObjective"></div><div id="journalEntries"></div><button id="closeJournal">Return to expedition [J]</button></div></div>
 <script>
@@ -337,7 +337,7 @@ function createScene3D(){
  function triangle(points,n){for(let i=0;i<3;i++)cubeData.push(...points[i],...n,i===1?1:0,i===2?1:0);}
  for(let i=0;i<3;i++)for(let j=i+1;j<3;j++)for(const si of [-1,1])for(const sj of [-1,1]){const k=3-i-j,normal=[0,0,0];normal[i]=si/Math.SQRT2;normal[j]=sj/Math.SQRT2;const points=[];for(const[v,w,t]of[[b,a,-a],[a,b,-a],[a,b,a],[b,a,a]]){const p=[0,0,0];p[i]=si*v;p[j]=sj*w;p[k]=t;points.push(p);}triangle([points[0],points[1],points[2]],normal);triangle([points[0],points[2],points[3]],normal);}
  for(const sx of [-1,1])for(const sy of [-1,1])for(const sz of [-1,1]){const n=[sx/Math.sqrt(3),sy/Math.sqrt(3),sz/Math.sqrt(3)];triangle([[sx*b,sy*a,sz*a],[sx*a,sy*b,sz*a],[sx*a,sy*a,sz*b]],n);}
- const cube=mesh(cubeData);
+ const cube=mesh(cubeData);const torsoData=cubeData.slice();for(let i=0;i<torsoData.length;i+=8){torsoData[i]*=.81+(torsoData[i+1]+.5)*.19;}const torsoMesh=mesh(torsoData);
  const cylinderData=[];for(let i=0;i<20;i++){const a=i*Math.PI/10,b=(i+1)*Math.PI/10;for(const[t,y]of[[a,-.5],[b,-.5],[b,.5],[a,-.5],[b,.5],[a,.5]])cylinderData.push(Math.cos(t)*.5,y,Math.sin(t)*.5,Math.cos(t),0,Math.sin(t),t/TAU,y+.5);for(const y of [-.5,.5])for(const t of [null,a,b])cylinderData.push(t===null?0:Math.cos(t)*.5,y,t===null?0:Math.sin(t)*.5,0,Math.sign(y),0,t===null?.5:(Math.cos(t)+1)/2,t===null?.5:(Math.sin(t)+1)/2);}
  const cylinder=mesh(cylinderData),planeData=[];quad(planeData,[0,0,0],[1,0,0],[0,0,-1],1,1,[0,1,0]);const plane=mesh(planeData);
  const sphereData=[];
@@ -357,7 +357,8 @@ const textures={};function texture(name,paint){const c=document.createElement('c
  texture('hazard',g=>{g.fillStyle='#b99a51';g.fillRect(0,0,512,512);g.fillStyle='#172829';for(let x=-512;x<1024;x+=128){g.beginPath();g.moveTo(x,0);g.lineTo(x+64,0);g.lineTo(x+576,512);g.lineTo(x+512,512);g.fill();}grain(g,.12);});
  texture('white',g=>{g.fillStyle='#ffffff';g.fillRect(0,0,512,512);});
  texture('water',g=>{g.fillStyle='#1d656d';g.fillRect(0,0,512,512);for(let y=0;y<512;y+=4){g.strokeStyle=`rgba(149,200,172,${.05+rng(y,1)*.10})`;g.lineWidth=1;g.beginPath();for(let x=0;x<=512;x+=8){const v=y+Math.sin(x*.036+y)*5;x?g.lineTo(x,v):g.moveTo(x,v);}g.stroke();}});
- texture('flesh',g=>{g.fillStyle='#b0b49a';g.fillRect(0,0,512,512);grain(g,.17);for(let i=0;i<70;i++){g.fillStyle=i%3?'#46594722':'#783b292e';g.beginPath();g.ellipse(rng(i,9)*512,rng(i,2)*512,3+rng(i,3)*20,2+rng(i,5)*12,0,0,TAU);g.fill();}});
+ texture('grip',g=>{g.fillStyle='#a1a19a';g.fillRect(0,0,512,512);grain(g,.18);g.strokeStyle='#303833';g.lineWidth=3;for(let i=-512;i<1024;i+=18){g.beginPath();g.moveTo(i,0);g.lineTo(i+512,512);g.moveTo(i,0);g.lineTo(i-512,512);g.stroke();}});
+texture('flesh',g=>{g.fillStyle='#b0b49a';g.fillRect(0,0,512,512);grain(g,.17);for(let i=0;i<70;i++){g.fillStyle=i%3?'#46594722':'#783b292e';g.beginPath();g.ellipse(rng(i,9)*512,rng(i,2)*512,3+rng(i,3)*20,2+rng(i,5)*12,0,0,TAU);g.fill();}});
 texture('cloth',g=>{g.fillStyle='#99a18a';g.fillRect(0,0,512,512);grain(g,.15);for(let y=0;y<512;y+=4){g.fillStyle='#142b2320';g.fillRect(0,y,512,1);}for(let x=0;x<512;x+=8){g.fillStyle='#c9c7a214';g.fillRect(x,0,1,512);}g.fillStyle='#55292144';g.beginPath();g.ellipse(170,210,63,92,.5,0,TAU);g.fill();});
 texture('zombie-face',g=>{
  g.fillStyle='#929d8a';g.fillRect(0,0,512,512);grain(g,.22);
@@ -420,6 +421,49 @@ for(const [material,data]of batches)staticMeshes.push({material,mesh:mesh(data)}
  function drawMesh(object,material,matrix=identity(),tint=[1,1,1],emission=0,alpha=1,water=0){gl.bindBuffer(gl.ARRAY_BUFFER,object.buffer);for(let i=0;i<3;i++){gl.enableVertexAttribArray(attrs[i]);gl.vertexAttribPointer(attrs[i],i===2?2:3,gl.FLOAT,false,32,i===0?0:i===1?12:24);}gl.uniformMatrix4fv(loc.uModel,false,matrix);gl.uniform3fv(loc.uTint,tint);gl.uniform1f(loc.uEmission,emission);gl.uniform1f(loc.uAlpha,alpha);gl.uniform1f(loc.uWater,water);gl.bindTexture(gl.TEXTURE_2D,textures[material]);gl.drawArrays(gl.TRIANGLES,0,object.count);}
  function box(material,x,y,z,w,h,d,tint=[1,1,1],angle=0,emission=0){drawMesh(cube,material,model(x,y,z,w,h,d,angle),tint,emission);}
  function tube(x,y,z,radius,height,tint=[.5,.6,.58]){drawMesh(cylinder,'metal',model(x,y,z,radius,height,radius),tint);}
+ // Shared equipment geometry gives pickups the same identity as held weapons.
+ function rod(a,b,r,tint,material='metal'){
+  const up=b.map((v,i)=>v-a[i]),length=Math.hypot(...up);if(length<.0001)return;for(let i=0;i<3;i++)up[i]/=length;
+  let right=[up[1],-up[0],0],len=Math.hypot(...right);if(len<.01){right=[1,0,0];len=1;}right=right.map(v=>v/len);
+  const forward=[right[1]*up[2]-right[2]*up[1],right[2]*up[0]-right[0]*up[2],right[0]*up[1]-right[1]*up[0]];
+  drawMesh(cylinder,material,[...right.map(v=>v*r),0,...up.map(v=>v*length),0,...forward.map(v=>v*r),0,...a.map((v,i)=>(v+b[i])/2),1],tint);
+ }
+ function equipment(x,y,z,shotgun,scale=1,yaw=0,held=false){
+  const steel=[.39,.44,.47],dark=[.12,.15,.17],rubber=[.18,.20,.19],edge=[.62,.66,.65],wood=[.34,.19,.10];
+  const p=(a,b,c)=>[x+scale*(a*Math.cos(yaw)+c*Math.sin(yaw)),y+b*scale,z+scale*(-a*Math.sin(yaw)+c*Math.cos(yaw))];
+  const b=(a,h,c,w,d,l,t=steel,mat='metal')=>box(mat,...p(a,h,c),w*scale,d*scale,l*scale,t,yaw);
+  const r=(a,c,d,t=steel)=>rod(p(...a),p(...c),d*scale,t);
+  const round=(a,h,c,w,d,l,t,mat='cloth')=>drawMesh(sphere,mat,model(...p(a,h,c),w*scale,d*scale,l*scale,yaw),t);
+  if(shotgun){
+   b(0,0,.015,.067,.070,.21,dark);b(0,.034,.02,.071,.012,.23,steel);
+   r([0,.016,-.07],[0,.016,-.38],.031,steel);r([0,-.020,-.07],[0,-.020,-.35],.024,dark);
+   r([0,.016,-.381],[0,.016,-.387],.022,[.015,.018,.02]);
+   const pump=held?Math.max(0,recoil-.15)*.07:0;
+   b(0,-.025,-.18+pump,.075,.046,.145,wood,'grip');for(let k=0;k<9;k++)b(0,-.026,-.24+k*.015+pump,.078,.049,.004,dark);
+   b(0,-.037,.14,.058,.10,.15,wood,'grip');if(!held){b(0,-.055,.24,.077,.14,.08,wood,'grip');b(0,-.055,.285,.079,.143,.013,dark);}
+   b(.035,.014,.015,.003,.027,.07,[.035,.045,.05]);b(.04,.009,.04,.02,.012,.017,edge);
+   b(0,.044,-.34,.008,.02,.01,edge);b(0,.043,.07,.047,.011,.016,dark);
+   for(let k=0;k<4;k++){r([-.038,-.009,.063-k*.032],[-.038,.035,.063-k*.032],.013,[.48,.08,.045]);r([-.038,.028,.063-k*.032],[-.038,.037,.063-k*.032],.014,[.62,.46,.19]);}
+  }else{
+   const slide=held?Math.max(0,recoil-.3)*.026:0;
+   b(0,-.019,.019,.052,.041,.17,dark);b(0,.012,.001+slide,.055,.046,.211,steel);b(0,.036,.001+slide,.051,.006,.204,edge);
+   b(.028,.014,-.015+slide,.002,.023,.043,dark);b(.029,.012,-.019+slide,.003,.012,.022,[.68,.57,.32]);
+   r([0,.013,-.105+slide],[0,.013,-.12],.026,dark);r([0,.013,-.121],[0,.013,-.123],.017,[.01,.013,.018]);
+   b(0,-.079,.065,.045,.092,.047,rubber,'grip');b(0,-.128,.065,.052,.008,.052,dark);
+   for(let side of [-1,1]){for(let k=0;k<7;k++)b(side*.028,.011,.036+k*.008+slide,.002,.034,.003,dark);b(side*.024,-.081,.067,.003,.059,.031,[.28,.29,.26],'grip');}
+   b(0,.045,-.088+slide,.006,.014,.01,dark);b(0,.045,.085+slide,.044,.014,.014,dark);for(let side of [-1,1])b(side*.014,.049,.094+slide,.004,.004,.002,[.75,.9,.64],'white');
+  }
+  r([-.018,-.03,.022],[-.018,-.075,-.023],.008,dark);r([-.018,-.075,-.023],[.018,-.075,-.023],.008,dark);r([.018,-.075,-.023],[.018,-.03,.022],.008,dark);b(0,-.048,.005,.006,.026,.008,steel);
+  if(held){
+   // Rounded gloves, cuff seams and separate fingers replace the block hand.
+   round(.021,-.078,.086,.082,.088,.075,[.30,.32,.28]);round(.006,-.135,.13,.094,.14,.10,[.23,.29,.27]);
+   b(.003,-.122,.131,.096,.021,.105,[.14,.18,.18],'grip');
+   for(let k=0;k<3;k++)round(-.022,-.053-k*.018,.071,.052,.016,.054,[.39,.40,.33]);
+   round(.029,-.048,.034,.022,.023,.081,[.37,.39,.32]);
+   if(shotgun){round(-.014,-.059,-.18,.105,.052,.08,[.31,.34,.29]);r([-.025,-.079,-.18],[-.11,-.22,.10],.072,[.24,.30,.28]);for(let k=0;k<4;k++)round(-.045,-.024,-.218+k*.022,.025,.041,.018,[.39,.41,.34]);}
+  }
+ }
+
  function door(d){const vertical=!!grid[d.y]?.[d.x-1]&&!!grid[d.y]?.[d.x+1],x=d.x+.5,z=d.y+.5;
   if(vertical){box('metal',x,1.4,z-.47,.2,2.8,.1);box('metal',x,1.4,z+.47,.2,2.8,.1);box('metal',x,2.69,z,.22,.22,1);}else{box('metal',x-.47,1.4,z,.1,2.8,.2);box('metal',x+.47,1.4,z,.1,2.8,.2);box('metal',x,2.69,z,1,.22,.22);}
   if(!d.open){box('metal',x,1.32,z,vertical?.13:.87,2.55,vertical?.87:.13,[.68,.76,.69]);box('hazard',x,.45,z,vertical?.15:.89,.25,vertical?.89:.15);box('metal',x,1.3,z,vertical?.16:.035,2.52,vertical?.035:.16,[.3,.35,.32]);}
@@ -432,7 +476,13 @@ for(const [material,data]of batches)staticMeshes.push({material,mesh:mesh(data)}
    if(i.type==='pump'){drawMesh(displayMesh,'pump-display',model(x,1.08,z-.331,.7,.7,.7),[.65,.95,.88],.5);tube(x-.75,.43,z+.32,.45,.85);tube(x+.75,.43,z+.32,.45,.85);box('hazard',x,.12,z,2.05,.18,1);tube(x-.75,1.0,z+.32,.16,.6);tube(x+.75,1.0,z+.32,.16,.6);box('metal',x,1.03,z+.38,.64,.11,.11,[.36,.49,.42],state.running?clock*3:0);box('white',x+.32,1.24,z-.22,.045,.045,.035,state.running?[.2,1,.45]:[1,.3,.08],0,1);}
   }else if(i.type==='note'||i.type==='schematic'){
    box('metal',x,.62,z,.64,.055,.48);for(const dx of [-.25,.25])box('metal',x+dx,.31,z,.035,.62,.36);box('white',x,.659,z,.32,.012,.28,i.type==='schematic'?[.32,.8,.86]:[.85,.82,.67]);
-  }else{box('metal',x,.32,z,.58,.64,.45,[.53,.59,.48]);if(i.type==='handle'){box('hazard',x,.82,z,.32,.08,.07);box('metal',x,.7,z,.045,.3,.06);}else if(i.type==='shotgun'){box('metal',x,.69,z,.55,.055,.08,[.28,.33,.32]);box('metal',x-.18,.67,z,.18,.09,.095,[.4,.27,.15]);}else if(i.type==='med'){box('white',x,.73,z,.28,.18,.18,[.72,.76,.66]);box('white',x,.74,z-.095,.15,.04,.008,[.85,.16,.08]);box('white',x,.74,z-.1,.04,.13,.009,[.85,.16,.08]);}else{box('hazard',x,.72,z,.3,.14,.2);}}
+  }else{
+   box('metal',x,.30,z,.62,.60,.48,[.34,.40,.37]);box('metal',x,.61,z,.66,.035,.52,[.54,.58,.53]);
+   if(i.type==='shotgun'){equipment(x,.76,z,true,1.55,Math.PI/2);box('cloth',x,.64,z,.60,.018,.30,[.37,.39,.27]);}
+   else if(i.type==='handle'){rod([x,.66,z],[x,.94,z],.045,[.51,.55,.52]);rod([x-.18,.95,z],[x+.18,.95,z],.07,[.67,.29,.09],'grip');for(const dx of [-.18,.18])tube(x+dx,.95,z,.085,.04,[.21,.26,.25]);box('metal',x,.67,z,.12,.035,.12,[.24,.28,.29]);}
+   else if(i.type==='med'){drawMesh(sphere,'cloth',model(x,.76,z,.39,.24,.27),[.56,.56,.41]);for(const dx of [-.13,.13])box('grip',x+dx,.77,z,.032,.22,.255,[.23,.27,.24]);box('white',x,.78,z-.138,.11,.095,.007,[.85,.83,.67]);box('white',x,.78,z-.144,.069,.022,.005,[.63,.13,.08]);box('white',x,.78,z-.145,.022,.068,.005,[.63,.13,.08]);rod([x-.06,.885,z],[x+.06,.885,z],.022,[.19,.24,.21]);}
+   else{box('grip',x-.06,.71,z,.30,.16,.24,[.33,.40,.28]);box('metal',x-.06,.803,z+.09,.30,.02,.06,[.47,.51,.37]);for(let k=0;k<5;k++){tube(x-.17+k*.052,.80,z-.035,.032,.075,[.71,.53,.22]);drawMesh(sphere,'metal',model(x-.17+k*.052,.85,z-.035,.026,.04,.026),[.63,.43,.18]);}for(let k=0;k<3;k++){tube(x+.18,.71,z-.08+k*.065,.038,.15,[.49,.10,.055]);tube(x+.18,.65,z-.08+k*.065,.04,.025,[.68,.51,.22]);}}
+  }
  }
  function decoration(prop){const x=prop.x,z=prop.y;
   if(prop.type==='pipes'){for(const off of [-.13,.13]){tube(x+off,1.37,z,.13,2.55,[.43,.53,.47]);for(const y of [.45,1.9])tube(x+off,y,z,.18,.07,[.25,.34,.32]);}box('metal',x,1.05,z-.12,.42,.04,.045,[.73,.37,.16]);tube(x,1.05,z-.1,.07,.26,[.67,.36,.15]);}
@@ -443,22 +493,33 @@ for(const [material,data]of batches)staticMeshes.push({material,mesh:mesh(data)}
   const brute=e.type==='brute',runner=e.type==='runner',dead=e.hp<=0,s=brute?1.16:runner?.93:1;
   const yaw=e.target?Math.atan2(e.target.x-e.x,e.target.y-e.y):e.id*.83,walk=!dead&&e.target?Math.sin(clock*(runner?12:7)+e.id):0;
   const skin=brute?[.43,.47,.40]:runner?[.59,.56,.49]:[.49,.56,.48],uniform=brute?[.37,.39,.31]:runner?[.56,.26,.12]:e.id%2?[.26,.38,.32]:[.48,.38,.20];
-  function point(p){let[x,y,z]=p;if(dead){z+=y*.65;y=.12+z*.06;}return[e.x+s*(x*Math.cos(yaw)+z*Math.sin(yaw)),s*y,e.y+s*(-x*Math.sin(yaw)+z*Math.cos(yaw))];}
-  function rounded(p,w,h,d,tint,material='flesh'){const q=point(p);drawMesh(sphere,material,model(...q,w*s,h*s,d*s,yaw),tint);}
+  function point(p){let[x,y,z]=p;const sway=!dead&&e.target?Math.sin(clock*(runner?6:3.5)+e.id)*.025:0;x+=sway*Math.max(0,y-.7);z+=runner?Math.max(0,y-.75)*.10:0;if(dead){const oldY=y;y=.13-z;z=oldY*.88;}return[e.x+s*(x*Math.cos(yaw)+z*Math.sin(yaw)),s*y,e.y+s*(-x*Math.sin(yaw)+z*Math.cos(yaw))];}
+  function posed(q,w,h,d){if(!dead)return model(...q,w,h,d,yaw);const c=Math.cos(yaw),n=Math.sin(yaw);return[c*w,0,-n*w,0,n*h,0,c*h,0,0,-d,0,0,...q,1];}
+  function rounded(p,w,h,d,tint,material='flesh'){const q=point(p);drawMesh(sphere,material,posed(q,w*s,h*s,d*s),tint);}
   function limb(a,b,r,tint,material='cloth'){const p=point(a),q=point(b),up=q.map((v,i)=>v-p[i]),length=Math.hypot(...up);if(length<.001)return;for(let i=0;i<3;i++)up[i]/=length;let right=[up[1],-up[0],0],len=Math.hypot(...right);if(len<.01){right=[1,0,0];len=1;}right=right.map(v=>v/len);const forward=[right[1]*up[2]-right[2]*up[1],right[2]*up[0]-right[0]*up[2],right[0]*up[1]-right[1]*up[0]];const m=[...right.map(v=>v*r*s),0,...up.map(v=>v*length),0,...forward.map(v=>v*r*s),0,...p.map((v,i)=>(v+q[i])/2),1];drawMesh(cylinder,material,m,tint);}
-  rounded([0,1.05,0],.43,.66,.29,uniform,'cloth');rounded([0,.76,0],.36,.22,.27,[.23,.26,.19],'cloth');
-  rounded([0,1.39,.025],.16,.18,.17,skin);rounded([runner?.035:0,1.62,.055],.27,.36,.28,skin);
-  const face=point([runner?.035:0,1.62,.055]);drawMesh(zombieFaceMesh,'zombie-face',model(...face,s,s,s,yaw),skin,0);
+  function panel(p,w,h,d,tint,mat='cloth'){drawMesh(cube,mat,posed(point(p),w*s,h*s,d*s),tint);}
+  drawMesh(torsoMesh,'cloth',posed(point([0,1.065,0]),(brute?.55:.43)*s,.55*s,.28*s),uniform);
+  rounded([0,.78,0],.32,.25,.25,[.20,.23,.21],'cloth');panel([0,.84,0],.35,.05,.28,[.12,.15,.14],'grip');panel([0,.84,.147],.055,.042,.014,[.57,.56,.44],'metal');
+  panel([0,1.11,.151],.025,.37,.017,[.20,.25,.23]);for(const side of [-1,1]){panel([side*.105,1.19,.16],.105,.09,.025,uniform);panel([side*.10,1.23,.18],.11,.014,.012,[.40,.43,.34]);}
+  if(brute){panel([0,1.10,.17],.46,.34,.11,[.17,.22,.22],'grip');for(let k=0;k<3;k++)panel([-.145+k*.145,.99,.24],.12,.15,.07,[.26,.31,.29]);for(const side of [-1,1])panel([side*.19,1.30,.07],.08,.22,.24,[.17,.22,.22]);}
+  else if(runner){panel([-.14,1.06,.158],.045,.30,.025,[.73,.62,.29]);panel([.14,1.06,.158],.045,.30,.025,[.73,.62,.29]);}
+
+  rounded([0,1.39,.025],.115,.14,.12,skin);rounded([runner?.035:0,1.62,.055],.27,.36,.28,skin);
+  const face=point([runner?.035:0,1.62,.055]);drawMesh(zombieFaceMesh,'zombie-face',posed(face,s,s,s),skin,0);
+  // Skull features catch real light instead of relying entirely on a painted face.
+  const hx=runner?.035:0;rounded([hx,1.49,.11],.13,.08,.13,skin);rounded([hx,1.615,.197],.036,.080,.044,skin);
+  for(const side of [-1,1]){rounded([hx+side*.133,1.62,.045],.044,.095,.045,skin);rounded([hx+side*.057,1.69,.168],.095,.037,.045,[.32,.38,.32]);rounded([hx+side*.058,1.645,.188],.019,.009,.009,[.69,.73,.61],'white');}
+  if(e.id%3===0&&!brute){rounded([hx,1.76,.018],.255,.13,.25,[.13,.16,.14],'cloth');}
   // Exposed bloody wound and a torn diagonal uniform strap.
-  rounded([-.16,1.18,.14],.13,.19,.035,[.45,.035,.024],'white');limb([-.2,1.27,.14],[.17,.86,.16],.035,[.65,.52,.30]);
+  rounded([-.16,1.12,.17],.095,.14,.028,[.32,.045,.03],'flesh');if(!brute)limb([-.2,1.27,.14],[.17,.86,.16],.021,[.32,.30,.23]);
   for(const side of [-1,1]){
    const stride=walk*side,hip=[side*.14,.74,0],knee=[side*.16,.40,stride*.13],ankle=[side*.17,.10,-stride*.13];
-   limb(hip,knee,.18,[.25,.30,.23]);limb(knee,ankle,.14,[.24,.29,.21]);rounded([side*.17,.065,.05-stride*.13],.17,.12,.30,[.12,.17,.14],'cloth');
-   const shoulder=[side*.27,1.27,0],elbow=[side*.36,runner?1.06:1.13,.19+stride*.04],hand=[side*.32,runner?.95:1.18,.42+stride*.07];
+   limb(hip,knee,.20,[.24,.28,.25]);limb(knee,ankle,.145,[.22,.26,.24]);panel([side*.16,.40,stride*.13+.052],.13,.12,.06,[.19,.23,.21]);rounded([side*.17,.065,.05-stride*.13],.17,.12,.30,[.12,.17,.14],'cloth');
+   const shoulder=[side*(brute?.29:.235),1.27,0],elbow=[side*.36,runner?1.06:1.13,.19+stride*.04],hand=[side*.32,runner?.95:1.18,.42+stride*.07];
    rounded(shoulder,.18,.21,.20,uniform,'cloth');limb(shoulder,elbow,.17,uniform);rounded(elbow,.15,.15,.15,skin);limb(elbow,hand,.13,skin,'flesh');rounded(hand,.14,.17,.11,skin);
    for(let finger=0;finger<3;finger++)limb([hand[0]-.045+finger*.045,hand[1],hand[2]+.025],[hand[0]-.045+finger*.045,hand[1]-.085,hand[2]+.10],.027,skin,'flesh');
   }
-  if(brute){rounded([0,1.26,.02],.67,.22,.36,[.3,.35,.3],'cloth');const helmet=point([0,1.84,.045]);drawMesh(sphere,'metal',model(...helmet,.36*s,.13*s,.34*s,yaw),[.66,.45,.19]);}
+  if(brute){rounded([0,1.77,.018],.33,.21,.33,[.22,.29,.27],'metal');panel([0,1.73,.19],.28,.022,.065,[.17,.23,.21],'metal');}
  }
 
  const panels=[];for(const facing of [-1,1]){const data=[];quad(data,[23.5,1.42,facing===-1?13.985:15.015],[facing===-1?-1:1,0,0],[0,1,0],2.9,1.37,[0,0,facing]);panels.push(mesh(data));}
@@ -487,15 +548,9 @@ for(const [material,data]of batches)staticMeshes.push({material,mesh:mesh(data)}
   gl.enable(gl.BLEND);gl.blendFunc(gl.SRC_ALPHA,gl.ONE_MINUS_SRC_ALPHA);gl.depthMask(false);for(const panel of panels)drawMesh(panel,'white',identity(),[.23,.5,.53],.1,.09);gl.depthMask(true);gl.disable(gl.BLEND);
   // First-person equipment uses its own depth pass, avoiding wall clipping.
   gl.clear(gl.DEPTH_BUFFER_BIT);gl.uniformMatrix4fv(loc.uView,false,identity());gl.uniformMatrix4fv(loc.uProjection,false,perspective(.85,width/height,.015,4));gl.uniform3fv(loc.uEye,[0,0,0]);gl.uniform3fv(loc.uForward,[0,0,-1]);gl.uniform1f(loc.uFlash,1);gl.uniform1f(loc.uFog,0);gl.uniform1f(loc.uWeapon,1);
-  const aimed=camera.aim,reloadPose=state.reload?Math.sin(Math.min(1,state.reload/(state.gun?1.0:.65))*Math.PI):0,gx=.17*(1-aimed),gy=-.125+aimed*.09-reloadPose*.15+(motion&&moving?Math.sin(clock*9)*.006:0),gz=-.52+recoil*.05;
-  box('metal',gx,gy,gz,.046,.037,state.gun?.36:.19,[.35,.42,.4]);box('metal',gx,gy+.024,gz-.035,.043,.012,state.gun?.35:.21,[.67,.71,.65]);box('metal',gx,gy-.065,gz+.05,.034,.105,.052,[.22,.28,.23]);box('metal',gx,gy-.05,gz+.087,.068,.067,.069,[.66,.58,.42]);box('metal',gx+.025,gy-.14,gz+.11,.092,.18,.10,[.27,.35,.27]);box('white',gx,gy+.035,gz-(state.gun?.16:.11),.008,.014,.009,[.67,.89,.69],0,.3);
-  // Slide serrations, ejection port, muzzle and trigger guard.
-  for(let k=0;k<5;k++)box('metal',gx+.024,gy+.005,gz+.02+k*.012,.004,.025,.004,[.15,.23,.22]);
-  box('metal',gx+.024,gy+.015,gz-.04,.004,.012,.037,[.09,.15,.16]);
-  box('metal',gx,gy,gz-(state.gun?.182:.099),.024,.018,.008,[.04,.09,.10]);
-  box('metal',gx+.025,gy-.06,gz-.025,.018,.08,.015,[.18,.25,.23]);box('metal',gx,gy-.10,gz-.025,.05,.012,.018,[.18,.25,.23]);
-  for(let finger=0;finger<3;finger++)box('metal',gx-.028+finger*.024,gy-.065,gz+.105,.019,.021,.047,[.54,.48,.33]);if(state.gun)box('metal',gx,gy-.036,gz-.12,.092,.047,.17,[.43,.31,.17]);
-  if(recoil>.7&&!$('flashSetting').checked)box('white',gx,gy,gz-(state.gun?.2:.12),.08,.10,.025,[1,.65,.23],0,3);
+  const aimed=camera.aim,reloadPose=state.reload?Math.sin(Math.min(1,state.reload/(state.gun?1.0:.65))*Math.PI):0,gx=.17*(1-aimed),gy=-.125+aimed*.055-reloadPose*.15+(motion&&moving?Math.sin(clock*9)*.006:0),gz=-.52+recoil*.05;
+  equipment(gx,gy,gz,!!state.gun,1,0,true);
+  if(recoil>.7&&!$('flashSetting').checked){const muzzle=gz-(state.gun?.39:.125);drawMesh(sphere,'white',model(gx,gy+.013,muzzle,.035,.05,.09),[1,.77,.30],2.5);}
   return true;
  }
  canvas.style.opacity='0';surface.style.display='block';return {render,name:'webgl',get resolution(){return[width,height];}};
@@ -503,5 +558,5 @@ for(const [material,data]of batches)staticMeshes.push({material,mesh:mesh(data)}
 let scene3D=null;try{scene3D=createScene3D();}catch(error){console.warn('3D renderer unavailable; using canvas fallback.',error);$('scene3d').style.display='none';}
 
 let last=0,acc=0,enemyCue=0,frameRate=0,sampleFrames=0,sampleTime=0;function frame(t){const elapsed=(t-last)/1000||0,dt=Math.min(.08,elapsed);last=t;if(mode==='play'){sampleFrames++;sampleTime+=elapsed;if(sampleTime>=1){frameRate=Math.round(sampleFrames/sampleTime);sampleFrames=0;sampleTime=0;}}if(mode==='play'){acc+=dt;while(acc>=1/60&&mode==='play'){update(1/60);acc-=1/60;}enemyCue+=dt;if(enemyCue>3){enemyCue=0;const e=state.enemies.filter(e=>e.hp>0&&dist(e,state.p)<10).sort((a,b)=>dist(a,state.p)-dist(b,state.p))[0];if(e){const f=field(e.x,e.y,13),v=received(f,state.p);if(v>2){const a=angle(Math.atan2(e.y-state.p.y,e.x-state.p.x)-state.p.a);audioEvent('enemy',v/30,a);if($('captionSetting').checked)caption((e.type==='runner'?'Rushing infected':'Zombie groans')+' — '+(Math.abs(a)>2?'behind':a>.5?'right':a<-.5?'left':'ahead'),2);}}}}else acc=0;draw(dt);requestAnimationFrame(frame);}updateButtons();requestAnimationFrame(frame);
-if(document.modelContext?.registerTool){try{Promise.resolve(document.modelContext.registerTool({name:'read_dead_air_expedition',description:'Read the current expedition objective and supplies without changing gameplay.',inputSchema:{type:'object',properties:{},additionalProperties:false},annotations:{readOnlyHint:true},execute(input){if(!input||Object.keys(input).length)throw new Error('Expected empty input');return {mode,objective:objective(),health:state.p.hp,drainage:Math.floor(state.drain/75*100),ammo:state.mag[state.gun],reserve:state.reserve[state.gun],checkpoint:!!checkpoint,position:{x:state.p.x,y:state.p.y,heading:state.p.a},journalEntries:state.notes?.length||0,version:'0.4',frameRate,renderer:scene3D?.name||'canvas',resolution:scene3D?.resolution||[800,450],water:drainageVisual(state.drain),zombies:{total:state.enemies.length,alive:state.enemies.filter(e=>e.hp>0).length,types:[...new Set(state.enemies.map(e=>e.type))]}};}})).catch(()=>{});}catch{}}
+if(document.modelContext?.registerTool){try{Promise.resolve(document.modelContext.registerTool({name:'read_dead_air_expedition',description:'Read the current expedition objective and supplies without changing gameplay.',inputSchema:{type:'object',properties:{},additionalProperties:false},annotations:{readOnlyHint:true},execute(input){if(!input||Object.keys(input).length)throw new Error('Expected empty input');return {mode,objective:objective(),health:state.p.hp,drainage:Math.floor(state.drain/75*100),ammo:state.mag[state.gun],reserve:state.reserve[state.gun],checkpoint:!!checkpoint,position:{x:state.p.x,y:state.p.y,heading:state.p.a},journalEntries:state.notes?.length||0,version:'0.4.1',frameRate,renderer:scene3D?.name||'canvas',resolution:scene3D?.resolution||[800,450],water:drainageVisual(state.drain),zombies:{total:state.enemies.length,alive:state.enemies.filter(e=>e.hp>0).length,types:[...new Set(state.enemies.map(e=>e.type))]}};}})).catch(()=>{});}catch{}}
 </script></body></html>
