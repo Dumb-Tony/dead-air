@@ -2,7 +2,17 @@
 
 September 11, 2026
 
-## v0.3 validation — September 11, 2026
+## v0.4 validation — September 11, 2026
+
+49 automated checks pass. New regressions cover the fourteen-zombie roster, three-target shotgun spread using one shell, automatic empty-trigger reload, four-monster checkpoint conversion, and the 50-second pump cycle. Existing mouse capture, journal return, minimap, water, collision, save and objective checks remain.
+
+Both canvas and 3D shooting-contract navigation runs completed the full expedition with enemies active: 87 simulated seconds, 22 shots, 14 kills, 100 health after returning to the healing terminal. The driver knows the route and aims accurately; these results establish integration and navigability, not human difficulty or first-time completion time.
+
+Local WebGL browser review at 1280×720 checked the three zombie classes, curved faces, reaching limbs, quarantine materials/HUD and full/empty archive water. Visual fixtures freeze enemy simulation for inspection; normal startup and combat are checked separately. A browser startup check caught an accidentally renamed event API, corrected before release; test mocks now use the real addEventListener API.
+
+The release retains the capture-only click behavior. Browser pointer-lock success is unavailable in the in-app browser, so the locked firing branch remains covered by the automated contract. Cross-GPU compatibility, audio listening quality and extended human difficulty testing remain open. All art is procedural, with no external runtime assets.
+
+## Historical v0.3 validation — September 11, 2026
 
 `node tests/check.mjs` — **44 checks passed**. New regressions cover capture-only clicks, firing while captured, return from journal, unlocked right clicks, water-level progression/clamping, fallback wall orientation, 3D shot height and full navigation using the 3D shooting contract.
 

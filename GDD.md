@@ -1,18 +1,18 @@
 # DEAD AIR — Game Design Document
 
-Version 0.3 · September 11, 2026 · Single-player survival FPS
+Version 0.4 · September 11, 2026 · Single-player zombie action FPS
 
 ## 1. Product and creative pillars
 
 You are trapped beneath Relay Station 6 after an emergency transmission arrives in your own voice: “Do not let me reach the transmitter.” Restore the facility and find the surface, while deciding whether restoring its voice is a mistake.
 
-**Core promise:** deliberately make noise, survive its consequences, return with permanent progress. Three pillars: understandable acoustics; powerful but consequential combat; preparation that survives contact with the unexpected. Grounded industrial spaces contain one impossible phenomenon: a broadcast that knows things it should not.
+**Core promise:** move fast, clear the undead, and solve the station’s machinery to open the route forward. Three pillars: responsive retro shooting; authored environmental puzzles; a breached industrial quarantine atmosphere. Acoustics and resource choices remain tactical tools, with combat now the primary rhythm.
 
 Full-campaign target: 4–6 hours, one authored interconnected station, no procedural map generation or compulsory grinding. This first delivery is a desktop, standalone, offline HTML first-person prototype with 3D rendering and grid-based simulation of one expedition, not the finished campaign or full 3D production art.
 
 ## 2. Player loop
 
-At maintenance: heal, save, inspect map and choose next objective. Depart through an acoustically insulated door. Search lockers for breaker handle, supplies and maintenance notes. Open alternate paths and place a delayed noisemaker. Install handle at west pump; start its 75-second cycle. Use continuous machinery as footstep cover while managing approaching threats. Drained archive unlocks. Recover lift schematic, return to maintenance, and use its terminal to complete the slice.
+At maintenance: heal, save, inspect map and choose next objective. Depart through an acoustically insulated door. Search lockers for breaker handle, supplies and maintenance notes. Open alternate paths and place a delayed noisemaker. Install handle at west pump; start its 50-second cycle. Use continuous machinery as footstep cover while managing approaching threats. Drained archive unlocks. Recover lift schematic, return to maintenance, and use its terminal to complete the slice.
 
 Retreat is allowed at any point. Stopping the pump retains drainage progress. Reaching maintenance does not replenish ammunition or resurrect enemies. Defeated enemies remain defeated. New game resets the expedition only after confirmation.
 
@@ -26,7 +26,7 @@ No mouse lock or fullscreen dependency for starting. Movement is collision-resol
 
 The prototype uses a connected grid as an acoustic graph. Sound spends strength crossing floor cells; heavy closed doors add substantial attenuation (10 units; 40 for closed maintenance seals); concrete blocks transmission. It can travel around a wall through a connected corridor but cannot pass directly through concrete. Open doors carry sound without the closed-door penalty. The player hears filtered directional cues under the same path attenuation. Acoustic captions optionally indicate bearing and relative strength, not exact enemy coordinates.
 
-Sound events carry location, strength and category. Listeners compare received strength against a threshold and investigate the event location, not the player's live coordinates. Their memory expires; new evidence is required for continued pursuit. Visual detection at short range remains possible. Machinery produces a persistent masking field: a weaker footstep or bottle sound at a listener is masked by the pump. Gunshots exceed the mask locally. Crawlers ignore footsteps and investigate machinery vibration, with separate short-range visual detection.
+Sound events carry location, strength and category. Zombies compare received strength against a threshold and investigate the event location, not the player's live coordinates. Their memory expires; new evidence is required for continued pursuit. Visual detection at short range remains possible. Machinery produces a persistent masking field: a weaker footstep or bottle sound at a zombie is masked by the pump. Gunshots exceed the mask locally. All zombie classes investigate footsteps and machinery.
 
 Prototype event strengths (game units, not real decibels): crouch 1.6; walk 5; sprint 10; metal floor multiplier 1.45; door 7; bottle 16; pistol 27; shotgun 35; pump 20; noisemaker 22. Ordinary closed-door attenuation 10, closed maintenance seal attenuation 40, floor-cell transmission cost 1. Open seals transmit sound normally. Field strengths and timers are tuning values, not promises of physical realism.
 
@@ -34,23 +34,23 @@ Essential fairness rules: no detection through concrete; no global alert spawned
 
 ## 5. Combat and resource economy
 
-Pistol: 8-round magazine, 35 damage, 0.30-second fire interval, 1.2-second reload. Shotgun: 4-round tube simplified to magazine reload, 90 close-range damage with falloff, 0.9-second fire interval, 1.8-second reload. Switch with 1/2. No ammunition is lost through tactical reload. Empty fire clicks without creating a gunshot event. Hits require line of sight and a narrow angular cone; shotgun has a wider cone. Multiple pellets/detailed ballistics are deferred.
+Pistol: 8 rounds, 35 damage, 0.16-second fire interval, 0.65-second reload. Shotgun: 4 shells, damage max(38, 105 − distance × 5), 0.55-second interval, 1-second reload, up to three visible targets inside its spread. Switch with 1/2. Reload conserves ammunition; an empty trigger starts reload when reserve is available without a gunshot. Hits respect horizontal and vertical aim and line of sight.
 
-Listeners: 70 health; crawlers: 45 health. Idle enemies periodically patrol nearby reachable points. Searches visit local points around the last evidence and expire without continuous timer refresh. Successful hit staggers for 0.5 seconds. Contact attack has a cooldown rather than per-frame damage. Health 100. A medical kit restores 45 up to cap; cannot be consumed at full health. Maintenance terminal heals fully and saves but gives no new consumables. Initial pistol ammunition 8 loaded + 12 reserve; supplies contain finite extra ammunition, medicine and shotgun. Bottles and noisemakers are finite in this slice; closed doors, movement, safe-room healing and path choices remain free alternatives.
+Shamblers: 70 health; runners: 45; brutes: 140. Hit stagger is 0.35 seconds, or 0.18 for brutes. Melee hits deal 12, 8 and 22 respectively with a 0.9-second cooldown. Player health is 100; medkits restore 45 up to cap. Maintenance heals and saves without restocking. Start with 8+48 pistol rounds and 12 reserve shells; acquire the shotgun in West Pump. Ammo pickups grant 16 pistol rounds and 6 shells. Nearby ammunition and medical pickups collect automatically; quest objects still require interaction.
 
 Three recoverable wedges can hold a door closed against enemies or hold it open as a retreat route. Closed unwedged doors can be opened by an investigating enemy after a telegraphed delay; wedged doors require several seconds of pounding, then lose the wedge. Player can remove an intact wedge. Enemies cannot enter the insulated maintenance room.
 
 ## 6. Enemies
 
-Listener states: patrol/idle → investigate → search → return; chase requires sight or renewed audible evidence. On lost sight chase updates stop at last known location. Search lasts about 8 seconds. Stronger recent evidence replaces weaker distant evidence. Two Listeners occupy different parts of the map, one further Listener guards the archive approach. Crawler starts in the eastern service route; pump vibration draws it out. All start physically placed; there is no invisible encounter director in this slice.
+Zombie states: patrol/idle → investigate → search → return; chase follows sight or renewed audible evidence. Searches expire after about 8 seconds. Fourteen authored starting positions contain shamblers, runners and brutes, with no invisible spawn director. Chase speeds are 2.05, 3.05 and 1.65 units/second respectively. Player movement is 3.8, sprint 5.6 and crouch 1.6, with aiming at 80% movement speed.
 
-Full campaign additions, not implemented: Custodian sabotages active systems after following predictable equipment cues; rare Mimic reproduces recorded voices, not arbitrary omniscient player tracking. Introduce these only after listeners and sound masking are proven.
+Future encounter work: more authored zombie ambushes, weapon variety, and additional machinery puzzles. Prior speculative monster classes are superseded by the zombie direction.
 
 ## 7. Level and objectives
 
 The West Pump is a looped service level with Maintenance (northwest), service spine, Lockers (northeast), West Pump (southwest), pipe gallery (south link), Archive (southeast), and east service route. Concrete walls, metal service floors, heavy acoustic doors and a maintenance shortcut give the routes distinct properties. Physical colored fixtures correspond to labeled map markers. A persistent top-right minimap reveals the overall architecture, player heading, door states and fixtures using icons without words. The larger labeled map remains available on M. Neither map reveals enemies.
 
-Objective state machine: find handle → install/start pump → drain → collect schematic → return/use maintenance terminal → completion. Pump can pause/resume at its console. After 35 seconds a warning announces a vibration surge; this is a louder sound event, not a hidden spawn. Drainage reaches 100% after 75 running seconds. Archive bulkhead refuses opening before drain completion. Maintenance shortcut requires releasing its latch from the outer side once, then stays unlocked.
+Objective state machine: find handle → install/start pump → drain → collect schematic → return/use maintenance terminal → completion. Pump can pause/resume at its console. After about 23.3 running seconds a warning announces a vibration surge; this is a louder sound event, not a hidden spawn. Drainage reaches 100% after 50 running seconds. Archive bulkhead refuses opening before drain completion. Maintenance shortcut requires releasing its latch from the outer side once, then stays unlocked.
 
 ## 8. Narrative and presentation
 
@@ -103,3 +103,10 @@ The flooded archive water level is 0.675 world units initially and falls with th
 Wall signage is modeled with consistent front-face texture coordinates. The raycast fallback also corrects side-dependent wall texture handedness and displays animated wet areas. If WebGL cannot initialize, the fallback remains playable with simpler graphics.
 
 An unlocked left click only attempts pointer capture and clears held fire. No shot, ammunition cost or acoustic event is generated. Once the pointer is already captured, left click fires and supports held fire; right click aims. Space fires without pointer capture and Z toggles aim. Returning from a journal/menu therefore cannot accidentally discharge the weapon.
+
+
+## v0.4 presentation and compatibility
+
+Quarantine Breach shifts the slice toward Doom/Wolfenstein-style pace while retaining the industrial story and puzzle route. WebGL zombies have articulated limbs, rounded heads, curved facial textures, wounds, differing uniforms, and distinct heavy silhouettes. Warmer lamps, quarantine signage, hazard thresholds, blood decals and electrical panels reinforce the setting. The HUD adds a kill count. Water, readable signs and the unlabeled minimap remain.
+
+Save version 1 remains readable: four-enemy legacy saves migrate listener to shambler and crawler to runner without resetting mission state or reviving kills. New expeditions use fourteen enemies. The game remains one offline HTML file with synthesized audio and procedural assets.

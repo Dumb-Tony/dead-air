@@ -1,6 +1,6 @@
-# Dead Air — West Pump v0.3
+# Dead Air — Quarantine Breach v0.4
 
-A standalone retro first-person survival-horror prototype. Read `GDD.md` for design, scope and deferred features.
+A standalone fast-paced retro zombie FPS with environmental puzzles. Read `GDD.md` for design, scope and deferred features.
 
 ## Play
 
@@ -8,9 +8,18 @@ Open `dist/index.html` in Chrome, Edge or Firefox on a desktop. Nothing to insta
 
 WASD move · mouse/arrow keys look · Shift sprint · C crouch · E interact · click/Space fire (hold for repeated fire) · right-click/Z aim · R reload · 1/2 weapons · Q bottle · G delayed noisemaker · V door wedge · H heal · F light · M full map · J journal · Esc pause/resume.
 
-Find the handle in Lockers, start the West Pump, survive 75 seconds of running machinery, retrieve the archive schematic and return to the maintenance terminal. You may stop/resume the pump. Maintenance heals and saves but does not refill ammunition.
+Find the handle in Lockers, start the West Pump, survive 50 seconds of running machinery, retrieve the archive schematic and return to the maintenance terminal. You may stop/resume the pump. Maintenance heals and saves but does not refill ammunition.
 
-## What changed in v0.3
+## What changed in v0.4
+
+- Faster movement and strafing, wider field of view, snappier pistol/shotgun handling, automatic reload on an empty trigger, and nearby supply collection.
+- Fourteen zombies across the station: shamblers, quick runners, and tougher armored brutes. The shotgun can damage up to three zombies in its spread. More ammunition supports fighting through the level.
+- New modeled undead with reaching arms, animated strides, curved facial geometry, wounds and torn uniforms; quarantine signs, blood trails, electrical cabinets, warmer emergency lighting and a redesigned combat HUD.
+- The breaker → pump → archive → return puzzle stays intact; the pump now completes in 50 running seconds. The unlabeled minimap, visible drainage water and capture-only mouse clicks remain.
+
+**Start a new expedition for the full 14-zombie encounter layout.** Existing checkpoints remain compatible and convert their old monsters into zombies while preserving the saved four-enemy roster and progress.
+
+## Earlier v0.3 improvements
 
 - A native WebGL 3D renderer replaces the primary raycast presentation: modeled doors, fixtures, machinery, shelving, pipework, creatures and first-person equipment; higher-resolution procedural materials; room lighting, flashlight falloff and distance fog. No library or asset downloads are required.
 - The archive is visibly flooded. Reinforced observation windows in East Service let you inspect it before the bulkheads unlock. Animated water lowers with pump progress and disappears when the archive is drained.
@@ -56,7 +65,7 @@ Wait for the **Deploy GitHub Pages** workflow to finish before checking the live
 
 ## Development
 
-Edit `dist/index.html`; no build step. Optional checks: `node tests/check.mjs` (44 checks, including an expedition navigated with enemies active). See `TEST-REPORT.md` for actual validation and limitations. This is a 2.5D prototype, not the full four-to-six-hour campaign.
+Edit `dist/index.html`; no build step. Optional checks: `node tests/check.mjs` (49 checks, including an expedition navigated with enemies active). See `TEST-REPORT.md` for actual validation and limitations. This is a 2.5D prototype, not the full four-to-six-hour campaign.
 
 
 For local visual review, run `node tests/preview.mjs` and open http://127.0.0.1:4174/. Named local-only fixtures include `?review=archive-full`, `archive-half`, `archive-empty`, `pump-full`, `pump-empty`, `maintenance-sign` and `lockers`. These review states are injected by the local server and are not present in the standalone game or Pages deployment.
