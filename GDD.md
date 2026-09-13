@@ -127,3 +127,8 @@ Save version 1 remains readable: four-enemy legacy saves migrate listener to sha
 ## v0.4.1 equipment and undead art
 
 Shared procedural weapon geometry renders held equipment and the shotgun pickup. Pistol slide and shotgun fore-end motion follow existing recoil; reload timing and damage are unchanged. Gloved hands, textured grips, separate barrels/tubes and sights reinforce weapon identity. Supplies have dedicated geometry. Zombies use tapered torsos, layered uniform detail, modeled facial features and correctly oriented corpse meshes. All meshes and textures are generated inside the standalone HTML.
+
+
+## v0.6 zombie presentation
+
+The primary undead presentation now uses four-view, alpha-cutout character art on a subdivided surface. Camera-relative direction selects the atlas view. Vertex deformation adds walking sway and leg movement; hit stagger bends the upper body; death rotates the surface toward the floor. Existing scene lights and flashlight illuminate the art, with a small ambient contribution preserving readable detail. Reduced motion suppresses idle/walk deformation. Old geometry remains available while an image decodes or if loading fails. Art is embedded in HTML and does not require external requests. Combat bounds and all campaign tuning remain unchanged.

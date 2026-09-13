@@ -2,6 +2,14 @@
 
 September 11, 2026
 
+## v0.6 zombie art validation — September 13, 2026
+
+62 checks pass: the existing full campaign regressions plus front/profile/rear view selection and exact agreement between all three embedded PNGs and their source assets. All atlases are 1254×1254 RGBA; sampled outside pixels have zero alpha.
+
+Local browser review at 1280×720 checked front, profile and rear lineup views; lighting and transparency; canvas fallback artwork; two pistol hits killing the runner; and the beginning of the death fall. Diagnostics reported all three art sets loaded in WebGL, with no warning/error logs during inspection. These are visual fixture checks, not a full manual combat-feel playtest. Automated complete-route replays remain the campaign regression evidence.
+
+The implementation uses four directional sprites with surface animation rather than fully articulated 3D characters. Direction changes are discrete, and corpse artwork lies flat. The art increases the standalone HTML size but requires no external downloads. Cross-GPU and extended performance testing remain open.
+
 ## v0.5 campaign validation — September 12, 2026
 
 60 checks pass. Added coverage includes distinct floor layouts and valid enemy placement, ventilation prerequisites/pause/resume, relay order reset and gates, final erasure/extraction locks, map-aware checkpoint validation and loading, invalid campaign metadata, resource/counter carryover, skippable opening and legacy completed-save continuation.

@@ -1,4 +1,4 @@
-# Dead Air — The Relay Campaign v0.5
+# Dead Air — The Relay Campaign v0.6
 
 A standalone four-chapter retro zombie FPS with environmental puzzles and a connected story. Read `GDD.md` for design, scope and deferred features.
 
@@ -9,6 +9,12 @@ Open `dist/index.html` in Chrome, Edge or Firefox on a desktop. Nothing to insta
 WASD move · mouse/arrow keys look · Shift sprint · C crouch · E interact · click/Space fire (hold for repeated fire) · right-click/Z aim · R reload · 1/2 weapons · Q bottle · G delayed noisemaker · V door wedge · H heal · F light · M full map · J journal · Esc pause/resume.
 
 Find the handle in Lockers, start the West Pump, survive 50 seconds of running machinery, retrieve the archive schematic and return to the maintenance terminal. You may stop/resume the pump. Maintenance heals and saves but does not refill ammunition.
+
+## Zombie art update — v0.6
+
+Three detailed character atlases replace the simple primary zombie models: a decayed maintenance worker, an infected rescue worker, and armored security. Four directional views, animated surface deformation, lighting, contact shadows, hit recoil and falling death poses integrate them into the world. The canvas fallback uses the same artwork.
+
+This is deliberately a directional-sprite presentation suited to the retro FPS, rather than a fully sculpted 3D character system. Damage, hit bounds, movement, campaign progression and saves are unchanged. Art remains embedded in the offline HTML. Source images and exact generation prompts are in [art/zombies](art/zombies/README.md); generated with the built-in image tool, not Higgsfield.
 
 ## Four-chapter campaign
 
@@ -88,7 +94,7 @@ Wait for the **Deploy GitHub Pages** workflow to finish before checking the live
 
 ## Development
 
-Edit `dist/index.html`; no build step. Optional checks: `node tests/check.mjs` (60 checks, including an expedition navigated with enemies active). See `TEST-REPORT.md` for actual validation and limitations. This is a four-chapter playable campaign slice; a four-to-six-hour playtime has not been established.
+Edit `dist/index.html`; no build step. Optional checks: `node tests/check.mjs` (62 checks, including an expedition navigated with enemies active). See `TEST-REPORT.md` for actual validation and limitations. This is a four-chapter playable campaign slice; a four-to-six-hour playtime has not been established.
 
 
 For local visual review, run `node tests/preview.mjs` and open http://127.0.0.1:4174/. Named local-only fixtures include `?review=archive-full`, `archive-half`, `archive-empty`, `pump-full`, `pump-empty`, `maintenance-sign` and `lockers`. These review states are injected by the local server and are not present in the standalone game or Pages deployment.
