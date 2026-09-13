@@ -1,5 +1,13 @@
 # Validation — Dead Air
 
+## v0.7 unified art validation — September 13, 2026
+
+63 checks pass, including intact embedding of all six new presentation PNGs, the full four-chapter automated movement/combat routes, save compatibility, puzzle progression, and mouse recapture without firing. These are automated input simulations, not human combat-feel testing.
+
+Browser visual fixtures at 1280×720 covered all four floors, title artwork and menu legibility, supplies, hip and aimed weapons, a shotgun shot followed by its reload pose, and the canvas fallback. Weapon scale and individual sight offsets were adjusted after visual inspection. No warning/error logs appeared during the inspected WebGL session. Detailed world props use transparent camera-facing artwork; existing collision geometry is retained. Canvas world props remain simpler. Extended cross-device performance testing is not included.
+
+The standalone HTML embeds all artwork and needs no external assets. Original PNGs and exact generation prompts are committed under art/presentation.
+
 September 11, 2026
 
 ## v0.6 zombie art validation — September 13, 2026

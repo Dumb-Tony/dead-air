@@ -1,4 +1,4 @@
-# Dead Air — The Relay Campaign v0.6
+# Dead Air — The Relay Campaign v0.7
 
 A standalone four-chapter retro zombie FPS with environmental puzzles and a connected story. Read `GDD.md` for design, scope and deferred features.
 
@@ -9,6 +9,14 @@ Open `dist/index.html` in Chrome, Edge or Firefox on a desktop. Nothing to insta
 WASD move · mouse/arrow keys look · Shift sprint · C crouch · E interact · click/Space fire (hold for repeated fire) · right-click/Z aim · R reload · 1/2 weapons · Q bottle · G delayed noisemaker · V door wedge · H heal · F light · M full map · J journal · Esc pause/resume.
 
 Find the handle in Lockers, start the West Pump, survive 50 seconds of running machinery, retrieve the archive schematic and return to the maintenance terminal. You may stop/resume the pump. Maintenance heals and saves but does not refill ammunition.
+
+## Whole-game art update — v0.7
+
+Alex now has cinematic title artwork and detailed gloved first-person hands. Both guns use matching idle, aimed, reload and firing artwork. Worn concrete, steel and canvas materials carry the realistic zombie aesthetic through all four floors. Medical bags, ammunition, puzzle hardware, the shotgun pickup, distraction devices and door wedges use detailed transparent artwork integrated with world lighting.
+
+The existing layouts, puzzles, story, combat rules and saves remain compatible. Weapons and zombies retain a retro sprite presentation. All artwork is embedded in the standalone HTML; the source PNGs and exact prompts are in [art/presentation](art/presentation/README.md). The canvas fallback shares the weapon artwork and plain wall material, with simpler world props.
+
+Published on GitHub Pages at **https://dumb-tony.github.io/dead-air/** from this repository’s dist folder using the existing deployment workflow. Source: **https://github.com/Dumb-Tony/dead-air**.
 
 ## Zombie art update — v0.6
 

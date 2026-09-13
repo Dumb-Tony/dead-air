@@ -132,3 +132,7 @@ Shared procedural weapon geometry renders held equipment and the shotgun pickup.
 ## v0.6 zombie presentation
 
 The primary undead presentation now uses four-view, alpha-cutout character art on a subdivided surface. Camera-relative direction selects the atlas view. Vertex deformation adds walking sway and leg movement; hit stagger bends the upper body; death rotates the surface toward the floor. Existing scene lights and flashlight illuminate the art, with a small ambient contribution preserving readable detail. Reduced motion suppresses idle/walk deformation. Old geometry remains available while an image decodes or if loading fails. Art is embedded in HTML and does not require external requests. Combat bounds and all campaign tuning remain unchanged.
+
+## v0.7 unified presentation
+
+Realistic embedded material and item atlases extend the zombie aesthetic across all four floors. Alex uses olive sleeves and tan gloves, with four first-person poses per weapon and matching title key art. Transparent props use camera-facing sprites with world depth and lighting. Puzzle geometry, combat and saves are unchanged. Art source and prompts: art/presentation/README.md.
