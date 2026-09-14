@@ -1,8 +1,12 @@
-# Dead Air — The Relay Campaign v0.9
+# Dead Air — The Relay Campaign v0.9.1
 
 A standalone seven-chapter retro zombie FPS with environmental puzzles and a connected story. **[Play Dead Air](https://dumb-tony.github.io/dead-air/)** · [Source repository](https://github.com/Dumb-Tony/dead-air) · [Offline HTML](dist/index.html).
 
 ## Aftershock expansion — v0.9
+
+### v0.9.1 handling and clearance fixes
+
+Carbine fire while aiming down sights now retains its centered sight pose, with recoil and a muzzle flash instead of switching to hip-fire art. Decorative cabinets, shelves, pipes, clinic beds and coastal panels keep clear of door approaches; signs relocate to continuous walls instead of spanning corridor openings. Bullet impacts produce short-lived sparks/debris, projectile trails are fuller, and flare bursts scatter fading sparks. Reduced-flash and reduced-motion settings remain supported. The patch passes 85 checks, including complete seven-chapter routes and new rendering/placement regressions.
 
 - Three new chapters continue after Transmission Chamber: **Northline Freight**, **Salt Ward**, and **Breakwater Station**. Restore rail routes, rescue the clinic's patients, then sever the coastal uplink.
 - Optional service-cache puzzles and extra story clues on **all seven floors**, including the original four. Read each cipher, activate three latches in the correct order, and find the supply cache. Power Exchange's cache offers an early carbine.

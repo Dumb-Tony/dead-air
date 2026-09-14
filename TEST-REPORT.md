@@ -1,5 +1,11 @@
 # Validation — Dead Air
 
+## v0.9.1 handling, clearance and particles — September 14, 2026
+
+85 checks pass. Added regression coverage for repeated aimed carbine shots, hip-fire/reload transitions, reduced-flash behavior, all seven chapters' decorative footprints versus expanded door approach areas, continuous wall support for room signs, and bounded/expiring/reset cosmetic particles. The existing full seven-chapter routes with active enemies and optional secrets still pass for both aiming contracts. These are automated input replays, not extended human feel testing.
+
+Browser fixtures reviewed aimed firing in WebGL and canvas, a cleared Northline platform doorway, softer impact sparks and flare bursts, and ordinary keyboard firing from the aimed pose. No warning/error logs appeared during the inspected sessions. Carbine fire uses the existing aimed artwork with recoil and an added muzzle-flash effect; it never selects the hip-fire frame while aimed. Decorative placement changes preserve map collision and saved objective coordinates. Cosmetic particle counts are capped at 96 and cleared when loading or changing chapters.
+
 ## v0.9 Aftershock validation — September 14, 2026
 
 81 checks pass. Complete automated movement, interaction and combat routes cover all seven chapters and all seven optional cache puzzles with enemies active, in both the original and WebGL aiming contracts. These are automated input replays with route knowledge, not human combat-feel testing. New checks cover v0.8 migration, the Chapter 4→5 transition, timed objectives and pause/resume, final grounding order, single-use cache rewards, carbine handling, projectile cover/dodging/vertical aim, Screamer interruption/alerting, and save round-trips. All seven new PNG sources match their embedded bytes.
