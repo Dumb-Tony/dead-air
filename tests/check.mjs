@@ -134,7 +134,7 @@ test('campaign journal closes back to completion without resuming a finished exp
  run('state=campaignState(13);mode="complete";openJournal();closeFieldJournal()');assert.equal(run('mode'),'complete');run('mode="pause";openJournal();closeFieldJournal()');assert.equal(run('mode'),'pause');
 });
 test('the final chapter has a finite three-page epilogue and no further relay',()=>{
- run('state=campaignState(13);completeChapter()');assert.equal(run('mode'),'prologue');assert.equal(run('endingPages.length'),3);run('finishPrologue();nextChapter()');assert.equal(run('state.chapter'),13);assert.equal(run('mode'),'complete');assert(run('chapters[13].ending.includes("THE END")'));
+ run('state=campaignState(13);completeChapter()');assert.equal(run('mode'),'prologue');assert.equal(run('endingPages.length'),3);run('finishPrologue();nextChapter()');assert.equal(run('state.chapter'),13);assert.equal(run('mode'),'complete');assert(run('chapters[13].ending.includes("THE END")'));run('startIntro(true);finishPrologue()');assert.equal(run('mode'),'complete');
 });
 test('new save rejects impossible quest dependencies and malformed circuit state',()=>{
  run('state=campaignState(7);state.quest.done=["release"]');assert(!run('valid(state)'));run('state.quest.done=[];state.quest.circuit=NaN');assert(!run('valid(state)'));run('state.quest.circuit=0;state.keepsakes=[7,7]');assert(!run('valid(state)'));

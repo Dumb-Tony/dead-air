@@ -53,6 +53,7 @@ replace("expansionSources.scenes+'\")':'linear-gradient", "longNightSource+'\")'
 replace("const pages=chapters[state.chapter]?.scene||opening", "const pages=state.won&&state.chapter===chapters.length-1?endingPages:chapters[state.chapter]?.scene||opening");
 replace("'Enter '+chapters[state.chapter||0].title", "state.won?'Finish story':'Enter '+chapters[state.chapter||0].title");
 replace("function finishPrologue(){const replay=", "function finishPrologue(){if(state.won&&state.chapter===chapters.length-1&&!intro.active){$('storyLayer').classList.add('hidden');showMenu('complete');return;}const replay=");
+replace("showMenu(started?'pause':'menu');return;", "showMenu(state.won?'complete':started?'pause':'menu');return;");
 replace("(chapters[state.chapter]?.scene||opening).length", "(state.won&&state.chapter===chapters.length-1?endingPages:chapters[state.chapter]?.scene||opening).length");
 replace("$('veil').style.backgroundPosition='center,right bottom';}}", "$('veil').style.backgroundPosition='center,right bottom';startChapterScene();}}");
 html=html.replaceAll('v0.9.2','v0.10.0').replaceAll("version:'0.9.2'","version:'0.10.0'").replaceAll('Seven-chapter campaign','Fourteen-chapter campaign');
