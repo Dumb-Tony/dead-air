@@ -1,5 +1,11 @@
 # Validation — Dead Air
 
+## v0.9 Aftershock validation — September 14, 2026
+
+81 checks pass. Complete automated movement, interaction and combat routes cover all seven chapters and all seven optional cache puzzles with enemies active, in both the original and WebGL aiming contracts. These are automated input replays with route knowledge, not human combat-feel testing. New checks cover v0.8 migration, the Chapter 4→5 transition, timed objectives and pause/resume, final grounding order, single-use cache rewards, carbine handling, projectile cover/dodging/vertical aim, Screamer interruption/alerting, and save round-trips. All seven new PNG sources match their embedded bytes.
+
+Browser review at 1280×720 verified WebGL loading of all five directional enemy atlases, nine animation atlases and six presentation assets; the new infected and settled corpses; carbine hip/aim alignment and magazine reload pose; flare firing and completed reload; freight briefing progression into gameplay; clinic environment and final completion UI with Mara artwork. Canvas fallback review covered the new infected and carbine. No warning/error logs appeared during the inspected sessions. Source and exact generation prompts are retained under art/aftershock. Cinematics are illustrated text cards, and characters use directional sprite animation. Cross-device performance and extended human listening/feel testing remain outside this pass.
+
 ## v0.8 animation validation — September 13, 2026
 
 67 checks pass, including full automated four-chapter routes, death sequence progression/settling, saved and legacy corpse timing, both reload sequences without early ammo transfer, and exact embedded animation sources. Browser visual fixtures cover all three death classes, intermediate collapse and settled poses, magazine and shell stages, and canvas fallback. Original artwork is retained; runtime matte extraction and baseline packing prepare the frames. These are sprite animation and automated/fixture checks, not physics ragdolls or an extended human feel test.

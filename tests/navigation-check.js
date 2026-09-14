@@ -11,7 +11,7 @@ function testRoute(destination){
 function testCombatTick(){
  const threats=state.enemies.filter(e=>e.hp>0&&dist(e,state.p)<6&&sees(state.p,e,6)).sort((a,b)=>dist(a,state.p)-dist(b,state.p));
  if(threats.length&&!safe(state.p)){
-  if(state.mag[state.gun]===0&&state.reserve[state.gun]===0&&state.owned[1-state.gun]){state.gun=1-state.gun;state.reload=0;}const e=threats[0];state.p.a=Math.atan2(e.y-state.p.y,e.x-state.p.x);lookPitch=scene3D?(1.35-1.25)/(2*dist(e,state.p)):0;keys={};if(state.mag[state.gun]===0)reload();else fire();update(1/60);if(state.p.hp<45&&state.meds>0){state.meds--;state.p.hp=Math.min(100,state.p.hp+45);}return true;
+  if(state.mag[state.gun]===0&&state.reserve[state.gun]===0){const next=[2,1,0,3].find(g=>state.owned[g]&&(state.mag[g]>0||state.reserve[g]>0));if(next!==undefined){state.gun=next;state.reload=0;}}const e=threats[0];state.p.a=Math.atan2(e.y-state.p.y,e.x-state.p.x);lookPitch=scene3D?(1.35-1.25)/(2*dist(e,state.p)):0;keys={};if(state.mag[state.gun]===0)reload();else fire();update(1/60);if(state.p.hp<45&&state.meds>0){state.meds--;state.p.hp=Math.min(100,state.p.hp+45);}return true;
  }
  return false;
 }
@@ -40,6 +40,12 @@ while(state.drain<75&&mode==='play'){if(!testCombatTick()){keys={};update(1/60);
 if(mode!=='play')throw new Error('Did not survive pump');
 testWalk({x:27.5,y:22.5});testUse('schematic');
 if(!state.schematic)throw new Error('Schematic not acquired');
+for(const id of [...secretOrders[0].map(x=>'secret-'+x),'secret-cache']){
+ const item=state.items.find(i=>i.id===id);let destination;
+ for(const [dx,dy]of [[-1,0],[1,0],[0,-1],[0,1]]){const p={x:item.x+dx,y:item.y+dy};if(solid(p.x,p.y))continue;try{testRoute(p);destination=p;break;}catch{}}
+ if(!destination)throw Error('Unreachable first-floor secret '+id);testWalk(destination);testUse(id);
+}
+if(!state.secrets.found)throw Error('First-floor cache not collected');
 testWalk({x:4.5,y:3.5});testUse('base');
 if(!state.won)throw new Error('Expedition did not complete');
 JSON.stringify({health:state.p.hp,seconds:Math.round(state.time),shots:state.shots,kills:state.kills,ammo:state.mag,reserve:state.reserve});

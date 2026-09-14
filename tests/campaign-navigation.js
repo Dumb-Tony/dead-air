@@ -6,11 +6,14 @@ function campaignUse(id){
 }
 function campaignWait(){let ticks=0;while(state.progress.running&&mode==='play'){if(++ticks>9000)throw new Error('Timed objective stuck');if(!testCombatTick()){keys={};update(1/60);}}if(mode!=='play')throw new Error('Died during campaign objective');}
 const results=[],contract3D=!!scene3D;
-for(let chapter=1;chapter<4;chapter++){
+for(let chapter=1;chapter<7;chapter++){
  if(state.won&&(state.chapter||0)===chapter-1)nextChapter();else state=campaignState(chapter);mode='play';resetTransient();if(contract3D)scene3D={name:'test'};state.gun=1;
  if(chapter===1){campaignUse('key');campaignUse('a');campaignUse('b');campaignUse('control');campaignWait();}
  if(chapter===2){campaignUse('r2');campaignUse('r1');campaignUse('r3');campaignUse('key');}
  if(chapter===3){campaignUse('a');campaignUse('b');campaignUse('c');campaignUse('control');campaignWait();}
+ if(chapter>=4){if(chapter===4)campaignUse('carbine');if(chapter===5)campaignUse('flare');state.gun=state.owned[2]?2:1;campaignUse('key');for(const id of chapter===6?['c','a','b']:['a','b'])campaignUse(id);campaignUse('control');campaignWait();}
+ for(const id of secretOrders[chapter])campaignUse('secret-'+id);
+ campaignUse('secret-cache');if(!state.secrets.found)throw new Error('Secret not recovered '+chapter);
  campaignUse('exit');if(!state.won)throw new Error('Chapter did not complete '+chapter);
  results.push({chapter:chapter+1,health:state.p.hp,seconds:Math.round(state.time-state.chapterStart.time),shots:state.shots-state.chapterStart.shots,kills:state.kills-state.chapterStart.kills});
 }

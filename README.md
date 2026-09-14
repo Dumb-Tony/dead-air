@@ -1,12 +1,22 @@
-# Dead Air — The Relay Campaign v0.8
+# Dead Air — The Relay Campaign v0.9
 
-A standalone four-chapter retro zombie FPS with environmental puzzles and a connected story. Read `GDD.md` for design, scope and deferred features.
+A standalone seven-chapter retro zombie FPS with environmental puzzles and a connected story. **[Play Dead Air](https://dumb-tony.github.io/dead-air/)** · [Source repository](https://github.com/Dumb-Tony/dead-air) · [Offline HTML](dist/index.html).
+
+## Aftershock expansion — v0.9
+
+- Three new chapters continue after Transmission Chamber: **Northline Freight**, **Salt Ward**, and **Breakwater Station**. Restore rail routes, rescue the clinic's patients, then sever the coastal uplink.
+- Optional service-cache puzzles and extra story clues on **all seven floors**, including the original four. Read each cipher, activate three latches in the correct order, and find the supply cache. Power Exchange's cache offers an early carbine.
+- **Security carbine** in Northline Cargo Arrivals (24-round magazine, rapid fire) and **flare launcher** in Salt Ward Oxygen Plant (single-shot impact blast). Both have new art and animated reloads. Select acquired weapons with **1–4**.
+- **Spitters** launch visible acid you can dodge sideways. **Screamers** call nearby infected. Their warning lights/captions give you time to interrupt either attack with a shot. Both have directional artwork and collapse animations.
+- Six illustrated arrival cards and a new final extraction image carry the story beyond Relay 6. Briefings are skippable. The original local erasure remains successful; the continuation concerns a separate relay shipped before quarantine.
+
+Load an existing checkpoint to continue. Completed Chapter 4 saves now lead to Chapter 5; earlier saves gain the optional secret fixtures without resetting progress. The full game and its artwork remain embedded in one offline HTML file. Source images and prompts: [art/aftershock](art/aftershock/README.md). Design and spoilers: [GDD.md](GDD.md), [STORY.md](STORY.md).
 
 ## Play
 
 Open `dist/index.html` in Chrome, Edge or Firefox on a desktop. Nothing to install and no internet needed. Click **Begin expedition**. An unlocked click only captures the mouse; it never fires. Once captured, left-click fires normally. Mouse capture is optional: arrow keys also look, and Space fires. Hold right-click or toggle Z for focused aim. Headphones recommended at comfortable volume. This build uses synthesized audio, not voice acting.
 
-WASD move · mouse/arrow keys look · Shift sprint · C crouch · E interact · click/Space fire (hold for repeated fire) · right-click/Z aim · R reload · 1/2 weapons · Q bottle · G delayed noisemaker · V door wedge · H heal · F light · M full map · J journal · Esc pause/resume.
+WASD move · mouse/arrow keys look · Shift sprint · C crouch · E interact · click/Space fire (hold for repeated fire) · right-click/Z aim · R reload · 1–4 weapons · Q bottle · G delayed noisemaker · V door wedge · H heal · F light · M full map · J journal · Esc pause/resume.
 
 Find the handle in Lockers, start the West Pump, survive 50 seconds of running machinery, retrieve the archive schematic and return to the maintenance terminal. You may stop/resume the pump. Maintenance heals and saves but does not refill ammunition.
 
@@ -30,9 +40,9 @@ Three detailed character atlases replace the simple primary zombie models: a dec
 
 This is deliberately a directional-sprite presentation suited to the retro FPS, rather than a fully sculpted 3D character system. Damage, hit bounds, movement, campaign progression and saves are unchanged. Art remains embedded in the offline HTML. Source images and exact generation prompts are in [art/zombies](art/zombies/README.md); generated with the built-in image tool, not Higgsfield.
 
-## Four-chapter campaign
+## Seven-chapter campaign
 
-You play Alex Vale, an emergency technician returning to Relay Station 6 after a distress call from your sister Mara. The quarantine has failed, the staff are dead, and the PA is speaking in your voice. A skippable opening briefing explains your arrival; twelve discoverable records and chapter-ending scenes reveal what happened. [STORY.md](STORY.md) contains the complete narrative and spoilers.
+You play Alex Vale, an emergency technician returning to Relay Station 6 after a distress call from your sister Mara. The quarantine has failed, the staff are dead, and the PA is speaking in your voice. A skippable opening briefing explains your arrival; 28 discoverable records and chapter-ending scenes reveal what happened. [STORY.md](STORY.md) contains the complete narrative and spoilers.
 
 | Chapter | Goal | Starting zombies |
 | --- | --- | ---: |
@@ -40,8 +50,11 @@ You play Alex Vale, an emergency technician returning to Relay Station 6 after a
 | Ventilation Works | Recover a filter, set intake/exhaust, purge the shaft | 18 |
 | Power Exchange | Synchronize relays TWO → ONE → THREE, retrieve a power core | 20 |
 | Transmission Chamber | Isolate three feeds, erase the carrier, reach extraction | 24 |
+| Northline Freight | Find dispatch key, align rail points, open clinic route | 26 |
+| Salt Ward | Recover battery, restore oxygen, release quarantine shutters | 28 |
+| Breakwater Station | Find severance key, ground feeds in order, cut uplink | 32 |
 
-The three new floors have distinct authored layouts, room signs, map labels and lighting. Ventilation's purge takes 30 running seconds; the final erasure takes 40. Both can pause and resume. The relay puzzle resets its sequence after a wrong input without consuming a resource.
+Floors have distinct authored layouts, room signs, map labels and lighting. Timed cycles can pause and resume: Ventilation 30 seconds, Transmission 40, Northline 25, Salt Ward 30, Breakwater 35. Ordered relay, grounding and secret puzzles reset after a wrong input without consuming resources.
 
 At chapter completion choose **Continue**. Weapons, remaining ammunition and campaign counters carry forward. Each new chapter heals you and provides a minimum reserve of 48 pistol rounds, 12 shells, one medkit, three bottles, two noisemakers and two wedges. Supplies are finite within each floor. Arrival checkpoints and completed-chapter checkpoints preserve progress; medical terminals heal and save. Death restores the last checkpoint, not every recent action.
 

@@ -140,3 +140,13 @@ Realistic embedded material and item atlases extend the zombie aesthetic across 
 ## v0.8 animation
 
 Eight-frame authored death sequences replace flat corpse rotations for all three zombie classes. Eight-frame reloads replace static poses for both weapons, retaining 0.65/1.0-second arcade reload timing. Camera-facing sprites and contact shadows preserve the existing visual style. Animation time follows simulation state; legacy corpses select the settled pose. All assets are embedded and shared by WebGL and canvas rendering.
+
+## v0.9 — Aftershock expansion
+
+Seven chapters continue the campaign after the former ending. Northline Freight, Salt Ward and Breakwater Station each have six connected rooms, looping routes, two gated approaches to the exit, a safe starting room, three story records, and an optional cache puzzle. Rail tracks, ward beds and coastal window panels distinguish the new interiors. Movement remains on the existing grid without jumping or vertical traversal.
+
+The carbine holds 24 rounds, fires at a 0.095-second interval and reloads in 1.25 seconds. It is available early in Power Exchange's secret cache, or normally in Northline's Cargo Arrivals. Salt Ward introduces a single-shot flare launcher with a 1.1-second reload, a visible projectile that follows aim, and cover-respecting impact damage within 2.3 map units. Both have original first-person artwork and animated reload poses; keys 1–4 select acquired weapons.
+
+Spitters have 80 health, a 0.7-second windup, a straight, dodgable acid projectile and a 3.4-second recovery. Acid deals 13 damage and stops at walls/closed doors. Screamers have 90 health, a 1.1-second warning and a seven-second recovery, and draw nearby infected toward the player. Hits cancel both windups. Their throat lights, captions and synthesized cues telegraph the attacks. Both use four-direction artwork and eight-frame collapse sequences.
+
+Each of all seven floors gains a service cipher, three ordered latches and one hidden supply cache. Wrong input resets the latch sequence without consuming resources. Cache rewards can only be collected once, include healing/ammunition, and contribute to a campaign total. Existing v0.8 saves gain the appended fixtures and weapon slots while preserving original progress. Chapter 4 completion now offers Chapter 5. The same single HTML remains fully offline; no external libraries, asset downloads or build step are required.
