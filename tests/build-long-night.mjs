@@ -57,5 +57,6 @@ replace("showMenu(started?'pause':'menu');return;", "showMenu(state.won?'complet
 replace("(chapters[state.chapter]?.scene||opening).length", "(state.won&&state.chapter===chapters.length-1?endingPages:chapters[state.chapter]?.scene||opening).length");
 replace("$('veil').style.backgroundPosition='center,right bottom';}}", "$('veil').style.backgroundPosition='center,right bottom';startChapterScene();}}");
 html=html.replaceAll('v0.9.2','v0.10.0').replaceAll("version:'0.9.2'","version:'0.10.0'").replaceAll('Seven-chapter campaign','Fourteen-chapter campaign');
+replace('Fight through seven floors, uncover what the station is broadcasting, and find the way out.', 'Fight through fourteen chapters, uncover the truth behind ECHO, and bring the living home.');
 replace('progress:state.progress,frameRate', 'progress:state.progress,quest:state.quest,keepsakes:state.keepsakes,archiveCount:state.archive?.length||0,frameRate');
 fs.writeFileSync(new URL('dist/index.html',root),html);
