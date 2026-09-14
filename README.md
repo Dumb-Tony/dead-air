@@ -1,4 +1,4 @@
-# Dead Air — The Relay Campaign v0.7
+# Dead Air — The Relay Campaign v0.8
 
 A standalone four-chapter retro zombie FPS with environmental puzzles and a connected story. Read `GDD.md` for design, scope and deferred features.
 
@@ -9,6 +9,12 @@ Open `dist/index.html` in Chrome, Edge or Firefox on a desktop. Nothing to insta
 WASD move · mouse/arrow keys look · Shift sprint · C crouch · E interact · click/Space fire (hold for repeated fire) · right-click/Z aim · R reload · 1/2 weapons · Q bottle · G delayed noisemaker · V door wedge · H heal · F light · M full map · J journal · Esc pause/resume.
 
 Find the handle in Lockers, start the West Pump, survive 50 seconds of running machinery, retrieve the archive schematic and return to the maintenance terminal. You may stop/resume the pump. Maintenance heals and saves but does not refill ammunition.
+
+## Animation update — v0.8
+
+All three zombie classes now have eight-frame collapse sequences: hit recoil, buckling knees, shoulder impact and a persistent crumpled corpse. Bodies no longer use the standing artwork rotated flat onto the floor. Pistol and shotgun reloads have eight distinct poses with moving hands, magazine/shell handling and a return to the ready grip. Both renderers use the animation artwork.
+
+Animations follow simulation time and pause with gameplay. Reload duration and ammo rules are unchanged; saves remain compatible. This is authored sprite animation rather than physics ragdolls or skeletal weapon animation. Source art and prompts: [art/animation](art/animation/README.md). The single offline HTML includes all assets. Live build: **https://dumb-tony.github.io/dead-air/**.
 
 ## Whole-game art update — v0.7
 

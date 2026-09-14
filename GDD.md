@@ -136,3 +136,7 @@ The primary undead presentation now uses four-view, alpha-cutout character art o
 ## v0.7 unified presentation
 
 Realistic embedded material and item atlases extend the zombie aesthetic across all four floors. Alex uses olive sleeves and tan gloves, with four first-person poses per weapon and matching title key art. Transparent props use camera-facing sprites with world depth and lighting. Puzzle geometry, combat and saves are unchanged. Art source and prompts: art/presentation/README.md.
+
+## v0.8 animation
+
+Eight-frame authored death sequences replace flat corpse rotations for all three zombie classes. Eight-frame reloads replace static poses for both weapons, retaining 0.65/1.0-second arcade reload timing. Camera-facing sprites and contact shadows preserve the existing visual style. Animation time follows simulation state; legacy corpses select the settled pose. All assets are embedded and shared by WebGL and canvas rendering.

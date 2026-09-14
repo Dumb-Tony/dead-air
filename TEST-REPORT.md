@@ -1,5 +1,10 @@
 # Validation — Dead Air
 
+## v0.8 animation validation — September 13, 2026
+
+67 checks pass, including full automated four-chapter routes, death sequence progression/settling, saved and legacy corpse timing, both reload sequences without early ammo transfer, and exact embedded animation sources. Browser visual fixtures cover all three death classes, intermediate collapse and settled poses, magazine and shell stages, and canvas fallback. Original artwork is retained; runtime matte extraction and baseline packing prepare the frames. These are sprite animation and automated/fixture checks, not physics ragdolls or an extended human feel test.
+
+
 ## v0.7 unified art validation — September 13, 2026
 
 63 checks pass, including intact embedding of all six new presentation PNGs, the full four-chapter automated movement/combat routes, save compatibility, puzzle progression, and mouse recapture without firing. These are automated input simulations, not human combat-feel testing.
