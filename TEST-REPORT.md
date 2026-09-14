@@ -1,5 +1,11 @@
 # Validation — Dead Air
 
+## v0.9.2 opening cinematic — September 14, 2026
+
+91 checks pass, including the existing full seven-chapter movement/combat routes. New checks cover five-shot timing, automatic entry into West Pump, no gameplay simulation or ammunition use during the intro, pause/hidden-page behavior, skipping/stepping, replay preservation of gameplay and checkpoints, reduced motion, intact offline artwork, and unchanged later chapter briefings.
+
+Browser review checked the opening layout at 1280×720, the replay menu action, Space pause, Enter next scene, Escape returning from replay, and warning/error logs. The cinematic uses animated illustrations and synthesized cues; no recorded dialogue, streamed video or additional runtime dependencies were added. These are functional and visual checks, not a human audio-mix review.
+
 ## v0.9.1 handling, clearance and particles — September 14, 2026
 
 85 checks pass. Added regression coverage for repeated aimed carbine shots, hip-fire/reload transitions, reduced-flash behavior, all seven chapters' decorative footprints versus expanded door approach areas, continuous wall support for room signs, and bounded/expiring/reset cosmetic particles. The existing full seven-chapter routes with active enemies and optional secrets still pass for both aiming contracts. These are automated input replays, not extended human feel testing.

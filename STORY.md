@@ -18,7 +18,7 @@ The player knows why they arrived, who they are looking for, and why they must r
 
 ## Delivery
 
-- Three skippable opening cards establish the call, arrival and first objective. They use text rather than recorded voice acting.
+- A 32-second skippable opening cinematic establishes the call, arrival and first objective in four illustrated shots followed by a title reveal. It uses timed text, camera motion, fades and synthesized sound rather than recorded voice acting. The menu can replay it without changing the current expedition.
 - Three optional records per chapter supply physical evidence, instructions and character context. A fourth service-cache cipher on every floor connects an optional three-latch puzzle to extra evidence and equipment.
 - Chapters 5–7 open with two skippable illustrated cards each. They remain text scenes without recorded voice acting or video. The final extraction uses a separate illustration of Mara.
 - Chapter completion screens deliver the essential revelations even if records are missed.

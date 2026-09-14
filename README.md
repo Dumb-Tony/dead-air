@@ -1,8 +1,14 @@
-# Dead Air — The Relay Campaign v0.9.1
+# Dead Air — The Relay Campaign v0.9.2
 
 A standalone seven-chapter retro zombie FPS with environmental puzzles and a connected story. **[Play Dead Air](https://dumb-tony.github.io/dead-air/)** · [Source repository](https://github.com/Dumb-Tony/dead-air) · [Offline HTML](dist/index.html).
 
 ## Aftershock expansion — v0.9
+
+### v0.9.2 opening cinematic
+
+New expeditions begin with a **32-second illustrated cinematic**: Mara's distress call, Alex's return to Relay Station 6, the abandoned maintenance checkpoint, the impossible PA warning, and a DEAD AIR title reveal. Camera movement, fades, letterboxing, captions and synthesized sound carry the backstory. It plays directly inside the offline HTML, without streaming a video or downloading assets.
+
+Use **Pause/Space**, **Next scene/Enter**, or **Skip intro/Escape**. The opening automatically enters West Pump when finished. **Watch opening** in the menu replays it without resetting gameplay or checkpoints. Reduced motion keeps its camera still; changing tabs pauses playback. Later chapter briefings remain manually advanced. Source art and prompt: [art/intro](art/intro/README.md).
 
 ### v0.9.1 handling and clearance fixes
 
