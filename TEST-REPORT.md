@@ -1,5 +1,11 @@
 # Validation — Dead Air
 
+## v0.10.1 shotgun loading and zombie health — September 14, 2026
+
+112 checks pass. Full fourteen-chapter ordinary movement/combat replays remain viable under both aiming contracts with finite ammunition and active enemies. New checks cover four separate 0.8-second shell insertions, partial top-ups, exhausted reserves, trigger interruption, empty-trigger behavior, save/load during insertion, two close-range hits against every full-health brute variant, deterministic within-class variety, and one-time proportional migration that preserves dead enemies.
+
+Browser checks observed the live shell count during reloading and used keyboard firing against a stationary 190-health brute: one blast left it alive; the second killed it. The fixture disabled its movement to isolate weapon damage. No error/warning logs appeared. These are targeted functional checks and automated combat routes, not an extended human difficulty playtest.
+
 ## v0.10.0 The Long Night — September 14, 2026
 
 104 checks pass. Complete automated movement/interaction/combat replays cover fourteen chapters under both aiming contracts with enemies active. They recover every supply cache and all seven new keepsakes. No actor teleporting, invulnerability, enemy removal or infinite ammo is used in these routes. Visual fixtures separately disable AI or choose a camera to inspect screens; these are not counted as routes.

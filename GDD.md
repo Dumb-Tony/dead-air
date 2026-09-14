@@ -1,6 +1,8 @@
 # DEAD AIR — Game Design Document
 
-Version 0.10.0 · September 14, 2026 · Single-player zombie action FPS
+Version 0.10.1 · September 14, 2026 · Single-player zombie action FPS
+
+Current combat balance: the four-shell shotgun loads one shell per 0.8-second animation cycle, can be interrupted by firing a loaded shell, and retains completed insertions across interruption/save-load. Other weapon reloads are unchanged. Health bands are runner 45–55, shambler 70–90, spitter 100–120, screamer 115–135, brute 170–190; deterministic per-enemy variation survives saves. Full-health brutes require at least two shotgun blasts. Old living enemies retain their health fraction when migrated, and corpses remain dead. The historical combat numbers below are superseded by this update.
 
 ## Current campaign scope — v0.10.0
 

@@ -1,6 +1,14 @@
-# Dead Air — The Relay Campaign v0.10.0
+# Dead Air — The Relay Campaign v0.10.1
 
 A standalone fourteen-chapter retro zombie FPS with environmental puzzles and a connected story. **[Play Dead Air](https://dumb-tony.github.io/dead-air/)** · [Source repository](https://github.com/Dumb-Tony/dead-air) · [Offline HTML](dist/index.html).
+
+## Shotgun and zombie balance — v0.10.1
+
+**[Play the updated game](https://dumb-tony.github.io/dead-air/)**. The shotgun now inserts **one shell every 0.8 seconds**, repeating its reload animation until full or out of reserve shells. Its ammo counter stays visible during reload. Fire to interrupt once a shell is available; already inserted shells remain loaded. An unfinished insertion neither grants nor consumes a shell. Loading a checkpoint cancels only the unfinished insertion. Other weapons retain their magazine reloads.
+
+Zombie health now varies deterministically between individuals: runners **45–55**, shamblers **70–90**, spitters **100–120**, screamers **115–135**, and brutes **170–190**. A full-health brute survives any single shotgun blast and takes two solid close-range hits; distance or previous damage can change the number needed. Old checkpoints scale living enemies' remaining health proportionally, once, without resurrecting corpses. No new expedition is required.
+
+112 checks pass, including complete fourteen-chapter combat routes, per-shell timing and conservation, interrupted/empty reload behavior, partial-save restoration, brute hit counts and health migration. The public game and standalone HTML contain the same update.
 
 ## The Long Night — v0.10.0
 

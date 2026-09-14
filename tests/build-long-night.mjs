@@ -59,4 +59,16 @@ replace("$('veil').style.backgroundPosition='center,right bottom';}}", "$('veil'
 html=html.replaceAll('v0.9.2','v0.10.0').replaceAll("version:'0.9.2'","version:'0.10.0'").replaceAll('Seven-chapter campaign','Fourteen-chapter campaign');
 replace('Fight through seven floors, uncover what the station is broadcasting, and find the way out.', 'Fight through fourteen chapters, uncover the truth behind ECHO, and bring the living home.');
 replace('progress:state.progress,frameRate', 'progress:state.progress,quest:state.quest,keepsakes:state.keepsakes,archiveCount:state.archive?.length||0,frameRate');
+replace('function reload(){',fs.readFileSync(new URL('combat-tuning.js',root),'utf8')+'\nfunction reload(){');
+replace("art:'shotgun',capacity:4,reload:1,", "art:'shotgun',capacity:4,reload:.8,");
+replace("const enemyHealth=type=>({shambler:70,runner:45,brute:140,spitter:80,screamer:90}[type]||70);", "const enemyHealth=(type,id=1)=>{const [base,spread]=({shambler:[80,10],runner:[50,5],brute:[180,10],spitter:[110,10],screamer:[125,10]}[type]||[80,10]);const seed=Math.abs(id)+Math.floor(Math.abs(id)/5);return base+((seed%3)-1)*spread;};");
+replace("hp:enemyHealth(type),home", "hp:enemyHealth(type,i),maxHp:enemyHealth(type,i),home");
+replace("hp:e.type==='brute'?140:e.type==='runner'?45:70,home", "hp:enemyHealth(e.type,i),maxHp:enemyHealth(e.type,i),home");
+replace('function fresh(){return {version:1,', 'function fresh(){return {version:1,combatVersion:1,');
+replace('function ensureExpansion(s){', 'function ensureExpansion(s){migrateCombat(s);');
+replace('if(state.cooldown>0||state.reload>0)return;const g=state.gun,w=weaponDef();', 'if(state.cooldown>0)return;const g=state.gun,w=weaponDef();if(state.reload>0){if(g!==1||state.mag[g]<=0)return;state.reload=0;}');
+replace('if(state.reload>0){state.reload-=dt;if(state.reload<=0){const g=state.gun,n=Math.min(weaponDef(g).capacity-state.mag[g],state.reserve[g]);state.mag[g]+=n;state.reserve[g]-=n;state.reload=0;}}','updateReload(dt);');
+replace("$('weapon').textContent=weaponDef(g).name;$('ammo').textContent=state.reload>0?'RELOADING':state.mag[g]+' / '+state.reserve[g];", "$('weapon').textContent=weaponDef(g).name+(g===1&&state.reload>0?' · LOADING SHELL':'');$('ammo').textContent=state.reload>0&&g!==1?'RELOADING':state.mag[g]+' / '+state.reserve[g];");
+html=html.replaceAll('v0.10.0','v0.10.1').replaceAll("version:'0.10.0'","version:'0.10.1'");
+replace('ammo:state.mag[state.gun],reserve:', 'ammo:state.mag[state.gun],reloading:state.reload>0,reloadSeconds:state.reload,reserve:');
 fs.writeFileSync(new URL('dist/index.html',root),html);
