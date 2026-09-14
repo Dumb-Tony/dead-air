@@ -1,5 +1,16 @@
 # Validation — Dead Air
 
+## v0.10.0 The Long Night — September 14, 2026
+
+104 checks pass. Complete automated movement/interaction/combat replays cover fourteen chapters under both aiming contracts with enemies active. They recover every supply cache and all seven new keepsakes. No actor teleporting, invulnerability, enemy removal or infinite ammo is used in these routes. Visual fixtures separately disable AI or choose a camera to inspect screens; these are not counted as routes.
+
+New-route simulated seconds: 196, 201, 199, 211, 198, 214, 213 (chapters 8–14). The original seven take roughly 665 seconds in this replay; total about 35 minutes. This is optimized simulation time with instant reading/known puzzles, not measured human playtime. **The 2–3 hour goal remains unverified.**
+
+Regressions cover all map dimensions, fixture/enemy floor placement, decoration clearance, staged gates, reversible circuit controls, cycle pause/load/resume, migration from v0.8 and v0.9.2, completed Breakwater continuation, finite ending, journal return modes, malformed quest data, and exact embedded artwork. Original intro, ADS, reload, death animation, water, mouse recapture and combat regressions continue to pass.
+
+Browser review at 1280×720 checks the expanded minimap/full map, Meridian arrival artwork and text, all three epilogue pages, the completed menu and campaign journal. No warning/error logs appeared in the inspected WebGL sessions. Extended human pacing, audio-mix review and cross-device performance are not claimed.
+
+
 ## v0.9.2 opening cinematic — September 14, 2026
 
 91 checks pass, including the existing full seven-chapter movement/combat routes. New checks cover five-shot timing, automatic entry into West Pump, no gameplay simulation or ammunition use during the intro, pause/hidden-page behavior, skipping/stepping, replay preservation of gameplay and checkpoints, reduced motion, intact offline artwork, and unchanged later chapter briefings.

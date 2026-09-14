@@ -1,6 +1,28 @@
-# Dead Air — The Relay Campaign v0.9.2
+# Dead Air — The Relay Campaign v0.10.0
 
-A standalone seven-chapter retro zombie FPS with environmental puzzles and a connected story. **[Play Dead Air](https://dumb-tony.github.io/dead-air/)** · [Source repository](https://github.com/Dumb-Tony/dead-air) · [Offline HTML](dist/index.html).
+A standalone fourteen-chapter retro zombie FPS with environmental puzzles and a connected story. **[Play Dead Air](https://dumb-tony.github.io/dead-air/)** · [Source repository](https://github.com/Dumb-Tony/dead-air) · [Offline HTML](dist/index.html).
+
+## The Long Night — v0.10.0
+
+**[Play the published campaign](https://dumb-tony.github.io/dead-air/)**. Load an existing checkpoint to continue; a completed Breakwater save now offers Civic Underpass. The standalone [offline HTML](dist/index.html) includes every chapter and all artwork. GitHub Pages continues to deploy the dist folder from main through the repository's existing workflow.
+
+- **Seven new chapters**, bringing the campaign to fourteen: Civic Underpass, Municipal Records, Meridian Observatory, Hollow Reservoir, Alder House, Witness Vault, and The Quiet Line.
+- Each new map has nine rooms across a 50 × 43 grid, looping passages, cover partitions, staged lower-wing locks, twelve objective fixtures, finite combat encounters, and frequent objective checkpoints. The first seven maps keep their geometry and progression.
+- A deeper final act follows the signed warnings, suppressed hearing, original carrier trial, a surviving researcher, and the identities of the victims. Relay 6 and the coast remain saved. A three-page illustrated epilogue gives the story a definitive ending.
+- **35 additional optional personal records** across all fourteen chapters, **seven new supply-cache puzzles**, and **seven personal keepsakes**. Keepsakes require identifying their owners from two local records; they are optional and never block the main ending. Their stories include workplace jokes, amateur astronomy, care-home chess, and lives outside the disaster.
+- Ordered machinery procedures and two coupled-circuit puzzles. Circuit controls change multiple lamps; use the recorded procedure and the HUD lamp state to align them. Incorrect inputs can be reversed, with no consumed quest resource.
+- A **campaign-wide journal** preserves recovered records and evidence across chapter transitions. Use J or Campaign journal in the menu, including after finishing. Existing pre-expansion saves retain their current-floor records; records discarded by earlier versions cannot be reconstructed retroactively.
+- New chapter and ending artwork, embedded offline. Source atlas and exact prompt: [art/long-night](art/long-night/README.md).
+
+### Campaign length
+
+**2–3 hours is the design target, not a verified playtime claim for this build.** The complete automated route takes about 35 simulated minutes with perfect route/solution knowledge, quick aiming, all caches and new keepsakes, and no time spent reading. That is a regression measurement, not a first-time player estimate. First-time exploration, puzzle-solving, reading, retries and pacing still need human measurement before the target can be advertised as achieved. See [CAMPAIGN-PACING.md](CAMPAIGN-PACING.md).
+
+### Authoring and verification
+
+104 checks cover all fourteen chapters, live-enemy movement replays under both aiming contracts, save migration, secrets, circuit reversibility, gate dependencies, ending/journal behavior and offline assets. Run node tests/check.mjs from the repository. Browser fixtures use node tests/preview.mjs and ?review=chapter10, ?scene=10, or ?review=chapter14-complete.
+
+The new act is authored in campaign-content.js and campaign-engine.js. node tests/build-long-night.mjs embeds them and the artwork into the standalone HTML using the preserved v0.9.2 commit as its baseline. Rebuilding requires a full Git clone containing commit 5a608d0; playing and checking the distributed HTML do not.
 
 ## Aftershock expansion — v0.9
 

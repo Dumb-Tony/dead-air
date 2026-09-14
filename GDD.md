@@ -1,8 +1,16 @@
 # DEAD AIR — Game Design Document
 
-Version 0.5 · September 11, 2026 · Single-player zombie action FPS
+Version 0.10.0 · September 14, 2026 · Single-player zombie action FPS
 
-## Current campaign scope — v0.5
+## Current campaign scope — v0.10.0
+
+Fourteen chapters: seven preserved campaign maps plus seven larger nine-room maps. The new act deepens the ECHO investigation and ends conclusively, with 362 additional finite starting infected, staged exploration, ordered procedures, two coupled-circuit puzzles, personal lore and persistent keepsakes. See README.md and STORY.md for the implemented scope and complete narrative.
+
+The current length target is **120–180 minutes for a first-time story/exploration playthrough**. It is not yet verified. No forced waiting, infinite respawns or resource grind has been added to inflate runtime. Automated complete routes with foreknowledge take about 35 simulated minutes, excluding reading and pauses. See CAMPAIGN-PACING.md for the pacing gate.
+
+Single-file offline play remains mandatory. Checkpoints migrate old equipment, current records and completed-floor progress. New quest state, optional keepsakes and campaign archive persist. Menus expose the journal after completion; closing it cannot resume a finished floor.
+
+## Historical campaign scope — v0.5
 
 Four playable chapters now form a complete local story arc: West Pump, Ventilation Works, Power Exchange and Transmission Chamber. Alex Vale returns after a call from sister Mara; the player uncovers ECHO's voice reconstruction and carrier while advancing through machinery puzzles. See STORY.md for narrative continuity. Three opening cards are skippable; each floor has three optional records and a mandatory debrief carrying its main revelation.
 
@@ -20,7 +28,7 @@ You are trapped beneath Relay Station 6 after an emergency transmission arrives 
 
 **Core promise:** move fast, clear the undead, and solve the station’s machinery to open the route forward. Three pillars: responsive retro shooting; authored environmental puzzles; a breached industrial quarantine atmosphere. Acoustics and resource choices remain tactical tools, with combat now the primary rhythm.
 
-Full-campaign target: 4–6 hours, one authored interconnected station, no procedural map generation or compulsory grinding. This first delivery is a desktop, standalone, offline HTML first-person prototype with 3D rendering and grid-based simulation of one expedition, not the finished campaign or full 3D production art.
+Historical initial target (superseded by 120–180 minutes): 4–6 hours, one authored interconnected station, no procedural map generation or compulsory grinding. This first delivery is a desktop, standalone, offline HTML first-person prototype with 3D rendering and grid-based simulation of one expedition, not the finished campaign or full 3D production art.
 
 ## 2. Player loop
 
