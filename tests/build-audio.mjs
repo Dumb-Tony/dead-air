@@ -1,0 +1,46 @@
+import fs from 'node:fs';
+const root=new URL('../',import.meta.url);
+export function buildAudio(html){
+ const replace=(a,b)=>{if(!html.includes(a))throw Error('Missing audio anchor: '+a.slice(0,100));html=html.replace(a,b);};
+ const manifest=JSON.parse(fs.readFileSync(new URL('audio/manifest.json',root),'utf8'));
+ const bank=Object.fromEntries(Object.entries(manifest).map(([id,m])=>[id,fs.readFileSync(new URL('audio/bank/'+m.file,root)).toString('base64')]));
+ const old=html.split('\n').find(l=>l.startsWith('function audioEvent('));
+ replace(old,'const soundBank='+JSON.stringify(bank)+';\n'+fs.readFileSync(new URL('audio-engine.js',root),'utf8'));
+ replace("master.gain.value=+$('volume').value/100;ac.resume()", "initSoundBank();master.gain.value=+$('volume').value/100;ac.resume()");
+ replace('ac.resume().catch(()=>{});', 'ac.resume().then(flushPendingSounds).catch(()=>{});');
+ replace('function sound(x,y,power,type,playerSound=false)', 'function sound(x,y,power,type,playerSound=false,audibleType)');
+ replace('if(v>0)audioEvent(type,Math.min(.8,v/25),angle(Math.atan2(y-state.p.y,x-state.p.x)-state.p.a));', "if(v>0)audioEvent(audibleType||(playerSound&&['gunshot','shotgun'].includes(type)?['gunshot','shotgun','carbine','flare'][state.gun]:type),Math.min(.8,v/25),angle(Math.atan2(y-state.p.y,x-state.p.x)-state.p.a),{muffled:!playerSound&&!sees(state.p,{x,y},30)});");
+ replace("sound(d.x+.5,d.y+.5,7,'door',true)","sound(d.x+.5,d.y+.5,7,'door',true,d.open?'door-open':'door-close')");
+ replace("audioEvent('door',strength/40,", "audioEvent('bash',strength/40,");
+ replace("audioEvent('enemy',v/30,a)", "audioEvent('zombie-'+e.type,v/30,a,{muffled:!sees(state.p,e,20)})");
+ replace('enemyCue=0;const e=state.enemies', 'enemyCue=-Math.random()*2;const e=state.enemies');
+ replace("audioEvent('radio',.18);}", "audioAt('zombie-'+e.type,e,.55);}");
+ replace("sound(e.x,e.y,30,'radio')", "sound(e.x,e.y,30,'radio',false,'zombie-screamer')");
+ replace("caption('ZOMBIE DOWN',1.2);}}", "caption('ZOMBIE DOWN',1.2);}enemyImpactSound(e);}");
+ replace("state.p.hp-amount);hurt=.55;", "state.p.hp-amount);audioEvent('hit',.65);hurt=.55;");
+ replace("audioEvent('enemy',.7)", "audioEvent('hit',.7);audioAt('zombie-'+e.type,e,.3)");
+ replace("state.reload=weaponDef(g).reload;audioEvent('click',.2)", "state.reload=weaponDef(g).reload;audioEvent('reload',.48)");
+ replace('state.mag[g]+=n;state.reserve[g]-=n;', "state.mag[g]+=n;state.reserve[g]-=n;if(n>0)audioEvent(g===1?'shell':'rack',g===1?.52:.25);");
+ replace("audioEvent('click',.15);state.reload+=w.reload;", 'state.reload+=w.reload;');
+ // Capture every chapter's fixture activation before chapter-specific handlers return.
+ replace('const i=state.items.find(i=>i.id===t.id);if(campaignAction(i))', "const i=state.items.find(i=>i.id===t.id);audioEvent(i.type==='note'?'paper':['ammo','med','handle','shotgun','carbine','flare'].includes(i.type)?'pickup':'switch',.25);if(campaignAction(i))");
+ replace("openJournal(i.id);audioEvent('radio',.12)", "openJournal(i.id)");
+ replace("}audioEvent('radio',.15);}", "}audioEvent('pickup',.2);}");
+ replace("audioEvent('radio',.1);}}", "audioEvent('pickup',.3);}}");
+ replace("if(e.code==='KeyF')state.p.light=!state.p.light;", "if(e.code==='KeyF'){state.p.light=!state.p.light;audioEvent('switch',.25);}");
+ replace("tell('Field dressing applied.');", "audioEvent('heal',.4);tell('Field dressing applied.');");
+ replace('state.gun=g;state.reload=0;}else tell', "state.gun=g;state.reload=0;audioEvent('gear',.3);}else tell");
+ replace("tell('Wedge recovered.');", "audioEvent('metal',.3);tell('Wedge recovered.');");
+ replace('state.wedges--;d.wedged=true;', "state.wedges--;d.wedged=true;audioEvent('metal',.4);");
+ replace("function showMenu(reason='pause'){", "function showMenu(reason='pause'){stopGameSounds();");
+ replace('function openJournal(focusId){', "function openJournal(focusId){stopGameSounds();audioEvent('paper',.2);");
+ replace('function resetTransient(){', 'function resetTransient(){stopGameSounds();soundLast.clear();');
+ replace('draw(dt);requestAnimationFrame(frame);', 'updateSoundscape(dt);draw(dt);requestAnimationFrame(frame);');
+ replace("document.addEventListener('keydown',e=>{if(e.target instanceof HTMLInputElement)return;", "document.addEventListener('keydown',e=>{if(e.target instanceof HTMLInputElement)return;if(!ac||ac.state==='suspended')initAudio();");
+ replace("if(d.locked){if(d.requires)", "if(d.locked){audioEvent('denied',.3);if(d.requires)");
+ replace('version:\'0.10.1\'', "audio:{ready:soundStats.ready,total:Object.keys(soundBank).length,context:ac?.state||'inactive',activeVoices:soundVoices.size,peakVoices:soundStats.peakVoices,outputPeak:soundStats.outputPeak,played:soundStats.played,last:soundStats.last,events:soundStats.events,errors:soundStats.errors,volume:+$('volume').value},version:'0.11.0'");
+ replace('<label>Sensitivity <input', '<button id="soundTest" type="button">Sound check</button><span id="soundTestLabel" aria-live="polite"></span><label>Sensitivity <input');
+ replace("$('begin').onclick=", "let soundTestIndex=0;$('soundTest').onclick=()=>{initAudio();const demos=[['gunshot','Pistol'],['shotgun','Shotgun'],['carbine','Carbine'],['door-open','Iron door'],['zombie-brute','Brute'],['shell','Shell insertion']];const [id,label]=demos[soundTestIndex++%demos.length];$('soundTestLabel').textContent=label;if(ac)ac.resume().then(()=>audioEvent(id,.5));};\n$('begin').onclick=");
+ replace('</details>', '</details><details><summary>Sound credits</summary><p>Firearm recordings © Michel Baradari / apollo-music.de, CC BY 3.0 (trimmed, normalized and mixed). Zombie moans: Darsycho; reloads: SpringySpringo; impacts: Kenney; iron door: forseti1121; water: ezwa — CC0. <a href="https://creativecommons.org/licenses/by/3.0/" target="_blank" rel="noopener">CC BY 3.0 license</a>. Full sources: audio/CREDITS.md in the project repository.</p></details>');
+ return html.replaceAll('v0.10.1','v0.11.0');
+}

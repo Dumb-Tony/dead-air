@@ -1,5 +1,15 @@
 # Validation — Dead Air
 
+## v0.11.0 recorded sound pass — September 15, 2026
+
+123 checks: existing 112 gameplay regressions plus 11 audio checks. The suite runs full fourteen-chapter combat/navigation routes under both aiming contracts. Audio checks exercise all embedded PCM buffers, distinct weapon dispatch, exactly four individual shell sounds, interrupted insertions, magazine cancellation on switching, master mute, 32-voice cap, pause cleanup, inaudible distant enemies, real door interactions, zombie/player impacts and deferred first-gesture playback.
+
+Browser keyboard checks on the local build verified four shell insertions produce four sample events and a nonzero post-compressor output signal. A stationary brute survives one shotgun hit and dies to the second; both gun reports, flesh impact, groans and body impact dispatch successfully. Pause leaves zero active voices. All 32 recordings initialize without decode errors. Sound check produces a measured output peak; observed combat peaks stayed below clipping in this short test (approximately 0.39 at 55% master). Browser error/warning logs were empty.
+
+The first browser test exposed a suspended audio context dropping the first shot. The fix unlocks from keyboard input and retains at most eight immediate events for up to 250 ms; pausing clears pending events. A repeated first-shot browser test confirmed gunshot and impact playback. These are browser functional tests and instrumented signal checks, not subjective listening through speakers/headphones. Hardware-specific mix/latency remains a human review item.
+
+All sound files are embedded in the standalone build; no runtime fetch or external audio dependency. The selected PCM bank is 1,281,826 bytes before base64 embedding. Public release remains GitHub Pages at https://dumb-tony.github.io/dead-air/.
+
 ## v0.10.1 shotgun loading and zombie health — September 14, 2026
 
 112 checks pass. Full fourteen-chapter ordinary movement/combat replays remain viable under both aiming contracts with finite ammunition and active enemies. New checks cover four separate 0.8-second shell insertions, partial top-ups, exhausted reserves, trigger interruption, empty-trigger behavior, save/load during insertion, two close-range hits against every full-health brute variant, deterministic within-class variety, and one-time proportional migration that preserves dead enemies.

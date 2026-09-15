@@ -1,6 +1,18 @@
-# Dead Air — The Relay Campaign v0.10.1
+# Dead Air — The Relay Campaign v0.11.0
 
 A standalone fourteen-chapter retro zombie FPS with environmental puzzles and a connected story. **[Play Dead Air](https://dumb-tony.github.io/dead-air/)** · [Source repository](https://github.com/Dumb-Tony/dead-air) · [Offline HTML](dist/index.html).
+
+## Recorded sound pass — v0.11.0
+
+**[Play Dead Air](https://dumb-tony.github.io/dead-air/)** — published from this repository's `main` branch and `dist/` folder through the existing GitHub Pages workflow. The [standalone HTML](dist/index.html) contains the identical audio bank and works offline; existing checkpoints remain compatible.
+
+- 32 embedded recordings: distinct pistol, shotgun and carbine reports; a layered flare launch; magazine mechanics and a separate sound for every completed shotgun shell insertion.
+- Iron doors opening, metal door slams and zombie pounding; concrete, metal and water footsteps; glass bottles, impacts, zombie deaths, pickups, equipment switches, healing and object interactions.
+- Six zombie vocal takes with type-dependent pitch and small variations. Nearby damage reactions, ambient groans, and screamer warnings use the same spatial mix. Distance and obstructing walls/doors reduce world sounds without changing enemy hearing rules.
+- Machinery, water and restrained metal ambience, with a short room echo and a compressor to control overlapping effects. Playback voices are capped and cleared on pauses/checkpoint changes; interrupted reloads cannot leave future insertion sounds playing.
+- Master volume and directional captions remain available. **Audio, comfort & mouse settings → Sound check** cycles through six examples. Audio unlocks on a click or keyboard gesture, including the first action after loading.
+
+123 automated checks cover the full campaign and the sound bank/event hooks, including shell timing, muting, voice cleanup and first-action playback. Browser checks confirmed real output, weapon reports, zombie impacts, four separate shell sounds, and pause cleanup. These are functional playback checks, not a human listening/mix review. See [validation](TEST-REPORT.md) and [recording licenses and credits](audio/CREDITS.md).
 
 ## Shotgun and zombie balance — v0.10.1
 

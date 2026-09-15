@@ -176,4 +176,5 @@ test('health variants distinguish fragile runners, ordinary zombies and tougher 
 test('legacy enemy health migrates once, preserving wounds and dead enemies',()=>{
  run('state=fresh();delete state.combatVersion;state.enemies.forEach(e=>delete e.maxHp);Object.assign(state.enemies[0],{type:"brute",hp:70});state.enemies[1].hp=0;checkpoint=snapshot();loadSave()');assert.equal(run('state.enemies[0].hp'),85);assert.equal(run('state.enemies[0].maxHp'),170);assert.equal(run('state.enemies[1].hp'),0);run('save();loadSave()');assert.equal(run('state.enemies[0].hp'),85);assert(run('valid(state)'));
 });
+eval(fs.readFileSync(new URL('audio-checks.js',import.meta.url),'utf8'));
 console.log(`\n${passed} checks passed. Simulation checks do not replace browser/listening playtests.`);
