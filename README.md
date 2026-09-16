@@ -1,6 +1,17 @@
-# Dead Air — The Relay Campaign v0.11.0
+# Dead Air — The Relay Campaign v0.12.0
 
 A standalone fourteen-chapter retro zombie FPS with environmental puzzles and a connected story. **[Play Dead Air](https://dumb-tony.github.io/dead-air/)** · [Source repository](https://github.com/Dumb-Tony/dead-air) · [Offline HTML](dist/index.html).
+
+## Recognizable objects and field journal — v0.12.0
+
+**[Play Dead Air](https://dumb-tony.github.io/dead-air/)**. Interactive objects now use their physical purpose across all fourteen chapters, including existing checkpoints:
+
+- Personal lore uses open bound notebooks; notices and evidence use paper records; maps and plans use blueprints. The journal is a warm paper notebook with clipped records, ruled pages, readable text and a highlighted entry when you collect a note.
+- Computer terminals have a monitor, readable screen, keyboard, stand and cables. Service latches have mechanical handles and lamps; valves have handwheels; electrical controls have breaker switches. Latches and controls reflect completed puzzle state.
+- Lost property uses a drawer cabinet, and service caches use supply chests. Filters, batteries, keys, cranks, tools, demolition charges, microfilm readers, duplication presses, counterweight machinery and signal lamps have distinct models.
+- Presentation is derived from each object's role without changing saved item types, locations or puzzle requirements. The lightweight fallback renderer also distinguishes object categories. New models, textures and journal styling are embedded in the standalone HTML.
+
+128 automated checks pass, including full campaign routes, save compatibility, object classification, latch feedback and note-reading interactions. Source files: `fixture-design.js`, `fixture-models.js`, `journal.css`; built by `tests/build-long-night.mjs`. GitHub Pages still publishes `dist/` from `main`; [offline HTML](dist/index.html) and [source](https://github.com/Dumb-Tony/dead-air) remain available.
 
 ## Recorded sound pass — v0.11.0
 

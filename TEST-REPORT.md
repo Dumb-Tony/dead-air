@@ -1,5 +1,13 @@
 # Validation — Dead Air
 
+## v0.12.0 object identity and journal — September 16, 2026
+
+128 checks pass, including complete fourteen-chapter movement/combat routes under both aiming contracts. New checks verify notes/latches/computers across every chapter, specific late-game object identities, presentation without saved-state mutation, correct latch feedback, and reading/closing a note through the real interaction path. No item coordinates, collision geometry, quest dependencies, save fields or resource counts changed.
+
+Local browser screenshots inspected the open notebook, CRT computer, blueprint, lever latch, valve wheel and lost-property cabinet. The terminal screen is readable from its intended front. The notebook interaction opens the collected lore record in the paper journal and scrolls to its highlighted entry. The planar paper orientation found in the first screenshot was corrected in the model transform. Visual fixtures isolate objects with enemies disabled; these screenshots are not counted as campaign playthroughs.
+
+The fallback renderer uses separate category sprites; generated presentation remains entirely offline. Current publish target: https://dumb-tony.github.io/dead-air/.
+
 ## v0.11.0 recorded sound pass — September 15, 2026
 
 123 checks: existing 112 gameplay regressions plus 11 audio checks. The suite runs full fourteen-chapter combat/navigation routes under both aiming contracts. Audio checks exercise all embedded PCM buffers, distinct weapon dispatch, exactly four individual shell sounds, interrupted insertions, magazine cancellation on switching, master mute, 32-voice cap, pause cleanup, inaudible distant enemies, real door interactions, zombie/player impacts and deferred first-gesture playback.
