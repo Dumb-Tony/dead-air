@@ -1,5 +1,5 @@
 test('all chapters give notes, mechanical latches and computers distinct identities',()=>{
- for(let ch=0;ch<14;ch++){
+ for(let ch=0;ch<18;ch++){
   run(`state=campaignState(${ch})`);
   assert(run('state.items.filter(i=>i.type==="note").every(i=>["journal","document","blueprint"].includes(fixtureKind(i)))'));
   assert(run('state.items.filter(i=>/^secret-[abc]$/.test(i.id)).every(i=>fixtureKind(i)==="latch")'));

@@ -9,6 +9,7 @@ const results=[],contract3D=!!scene3D;
 for(let ch=7;ch<chapters.length;ch++){
  if(state.won&&state.chapter===ch-1)nextChapter();else state=campaignState(ch);
  mode='play';resetTransient();if(contract3D)scene3D={name:'test'};state.gun=state.owned[2]?2:1;
+ if(ch>=14)for(const kind of ['trauma','distraction','ammunition'])use('evac-supply-'+kind);
  for(const id of ['key','record','route',...chapters[ch].order,'access','proof','consent','control'])use(id);
  let ticks=0;while(state.quest.running&&mode==='play'){if(++ticks>10000)throw Error('Cycle stuck');if(!testCombatTick()){keys={};update(1/60);}}
  if(mode!=='play')throw Error('Died '+ch);

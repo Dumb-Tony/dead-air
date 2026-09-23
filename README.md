@@ -1,6 +1,20 @@
-# Dead Air — The Relay Campaign v0.12.0
+# Dead Air — The Relay Campaign v0.13.0
 
-A standalone fourteen-chapter retro zombie FPS with environmental puzzles and a connected story. **[Play Dead Air](https://dumb-tony.github.io/dead-air/)** · [Source repository](https://github.com/Dumb-Tony/dead-air) · [Offline HTML](dist/index.html).
+A standalone eighteen-chapter retro zombie FPS with environmental puzzles and a connected story. **[Play Dead Air](https://dumb-tony.github.io/dead-air/)** · [Source repository](https://github.com/Dumb-Tony/dead-air) · [Offline HTML](dist/index.html).
+
+## The last ambulance — v0.13.0
+
+Four new chapters follow The Quiet Line: **Freight Floodgates**, **Quarantine Depot**, **Hospital Approach**, and **Dawn Triage**. ECHO stays destroyed. The final act follows the physical evacuation and ends with a hospital handover before the existing public-hearing and family-dinner epilogue.
+
+- 36 additional rooms, 216 additional zombies across the existing five classes, four ordered environmental puzzles and four optional service-cache puzzles.
+- Twelve new lore records and four personal keepsakes. Each new chapter also has a trauma pouch (+2 medkits), distraction kit (+3 bottles and +2 noisemakers), and ammunition case. Supplies are collected once and persist in saves.
+- Every chapter transition now has two illustrated cinematic cards, nine seconds each. Pause/Resume, Continue and Skip remain available; Space pauses, Enter advances and Escape skips. Reduced motion disables camera movement. The final epilogue waits for the reader instead of timing out.
+- Four newly generated evacuation illustrations are embedded in the HTML. These are moving illustrated scenes, not voice-acted videos. Earlier chapters use the existing scene artwork, with new story bridges for chapters 2–4.
+- Existing saves remain compatible, including a completed chapter-14 checkpoint: choose the next chapter to continue into the evacuation.
+
+132 automated checks include complete 18-chapter movement/combat routes under both aiming modes, all secrets, actual supply collection, save/load, former-finale continuation, cinematic timing, pause and reduced motion. These input simulations are not a measured human playtime claim. Local browser checks verified the illustrated depot scene and transition into WebGL gameplay without spending ammunition.
+
+Publishing remains GitHub Pages from `main`, deploying `dist/` through `.github/workflows/pages.yml`. The shareable URL is **https://dumb-tony.github.io/dead-air/** and the source is **https://github.com/Dumb-Tony/dead-air**. Download `dist/index.html` for the same game offline. Build with `node tests/build-long-night.mjs`; verify with `node tests/check.mjs`. New content lives in `evacuation-content.js`; integration in `tests/build-evacuation.mjs`.
 
 ## Recognizable objects and field journal — v0.12.0
 

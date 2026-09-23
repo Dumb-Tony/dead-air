@@ -2,6 +2,7 @@ import fs from 'node:fs';
 import {execFileSync} from 'node:child_process';
 import {buildAudio} from './build-audio.mjs';
 import {buildFixtures} from './build-fixtures.mjs';
+import {buildEvacuation} from './build-evacuation.mjs';
 const root=new URL('../',import.meta.url);
 let html=execFileSync('git',['show','5a608d0:dist/index.html'],{cwd:root,encoding:'utf8',maxBuffer:100*1024*1024});
 const replace=(a,b)=>{if(!html.includes(a))throw Error('Missing anchor '+a.slice(0,100));html=html.replace(a,b);};
@@ -73,4 +74,4 @@ replace('if(state.reload>0){state.reload-=dt;if(state.reload<=0){const g=state.g
 replace("$('weapon').textContent=weaponDef(g).name;$('ammo').textContent=state.reload>0?'RELOADING':state.mag[g]+' / '+state.reserve[g];", "$('weapon').textContent=weaponDef(g).name+(g===1&&state.reload>0?' · LOADING SHELL':'');$('ammo').textContent=state.reload>0&&g!==1?'RELOADING':state.mag[g]+' / '+state.reserve[g];");
 html=html.replaceAll('v0.10.0','v0.10.1').replaceAll("version:'0.10.0'","version:'0.10.1'");
 replace('ammo:state.mag[state.gun],reserve:', 'ammo:state.mag[state.gun],reloading:state.reload>0,reloadSeconds:state.reload,reserve:');
-fs.writeFileSync(new URL('dist/index.html',root),buildFixtures(buildAudio(html)));
+fs.writeFileSync(new URL('dist/index.html',root),buildEvacuation(buildFixtures(buildAudio(html))));

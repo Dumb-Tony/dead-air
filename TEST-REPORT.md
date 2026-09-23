@@ -1,5 +1,13 @@
 # Validation — Dead Air
 
+## v0.13.0 evacuation act — September 22, 2026
+
+132 automated checks pass. Complete routes cover all 18 chapters under the fallback and WebGL aiming contracts, with ordinary movement, active enemies, finite ammunition, ordered objectives, local secrets and keepsakes. The four new floors also collect all three new supply stashes through the interaction route. Additional regressions verify single-use grants and save/load, completed former-finale continuation, all chapter scenes, automatic advance without shooting, pause, reduced motion and a manually advanced final epilogue. All 18 layouts are unique and maintain fixture/spawn floor placement and doorway decoration clearance.
+
+Local browser: Quarantine Depot's cinematic rendered its correct atlas quadrant with readable text and working Pause/Resume. Skip entered chapter 16 with 52 live zombies, eight pistol rounds, 100 health and WebGL rendering. The audio bank loaded 32/32 recordings with zero reported errors. These are functional/visual checks; the complete combat routes are automated input simulations, not manual feel tests or a measured 2–3 hour human playthrough.
+
+Standalone assets remain embedded, including the new four-scene evacuation atlas. Public verification is recorded in the release response after the GitHub Pages workflow completes.
+
 ## v0.12.0 object identity and journal — September 16, 2026
 
 128 checks pass, including complete fourteen-chapter movement/combat routes under both aiming contracts. New checks verify notes/latches/computers across every chapter, specific late-game object identities, presentation without saved-state mutation, correct latch feedback, and reading/closing a note through the real interaction path. No item coordinates, collision geometry, quest dependencies, save fields or resource counts changed.

@@ -75,7 +75,7 @@ test('checkpoints validate against their own map without changing active floor',
 test('invalid campaign checkpoint metadata is rejected',()=>{run('state=campaignState(1);state.progress.timer=Infinity');assert.equal(run('valid(state)'),false);run('state.progress.timer=0;state.chapter=9');assert.equal(run('valid(state)'),false);});
 test('chapter transition carries gear and counters and resets local objectives',()=>{run('state.kills=9;state.shots=20;state.reserve=[70,18];completeChapter();nextChapter()');assert.equal(run('state.chapter'),1);assert.equal(run('state.kills'),9);assert.equal(run('state.reserve[0]'),70);assert.equal(run('state.progress.flags.length'),0);assert.equal(run('state.history.length'),1);assert.equal(run('checkpoint.chapter'),1);});
 test('opening briefing can advance or skip without firing',()=>{run('startNew()');assert.equal(run('mode'),'prologue');run('finishPrologue()');assert.equal(run('mode'),'play');assert.equal(run('state.shots'),0);assert.equal(run('checkpoint.chapter'),0);});
-test('completed legacy West Pump checkpoint offers chapter two',()=>{run('state.won=true;delete state.chapter;checkpoint=snapshot();loadSave();nextChapter()');assert.equal(run('state.chapter'),1);assert.equal(run('mode'),'play');});
+test('completed legacy West Pump checkpoint offers chapter two',()=>{run('state.won=true;delete state.chapter;checkpoint=snapshot();loadSave();nextChapter()');assert.equal(run('state.chapter'),1);assert.equal(run('mode'),'prologue');});
 const campaignNavigation=fs.readFileSync(new URL('./campaign-navigation.js',import.meta.url),'utf8');
 test('navigate chapters two through seven and their secrets with enemies active',()=>{run(navigation);console.log('Campaign navigation:',run(campaignNavigation));});
 test('full campaign also completes with the 3D aiming contract',()=>{run('scene3D={name:"test"}');run(navigation);console.log('3D campaign:',run(campaignNavigation));run('scene3D=null');});
@@ -112,8 +112,8 @@ test('replaying the opening preserves game and saved checkpoint',()=>{run('state
 test('reduced motion keeps the cinematic camera still',()=>{run('$("motionSetting").checked=true;startNew();updateIntro(2)');assert.equal(el('introVisual').style.transform,'none');run('finishPrologue();$("motionSetting").checked=false');});
 test('opening artwork is embedded intact and later chapter briefings stay manual',()=>{assert(Buffer.from(run('introSource').split(',')[1],'base64').equals(fs.readFileSync(new URL('../art/intro/opening.png',import.meta.url))));run('state=campaignState(5);startChapterScene();updateIntro(40)');assert.equal(run('mode'),'prologue');assert.equal(run('intro.active'),false);assert.equal(run('storyPage'),0);run('finishPrologue()');});
 test('new chapters complete through ordinary movement with live enemies and all secrets',()=>{run(navigation);run(campaignNavigation);console.log('Long Night routes:',run(fs.readFileSync(new URL('./long-night-navigation.js',import.meta.url),'utf8')));});
-test('fourteen floors validate and expanded geometry has no embedded fixtures or spawns',()=>{
- const maps=[];for(let ch=0;ch<14;ch++){run(`state=campaignState(${ch})`);assert(run('valid(state)'));assert(run('state.items.every(i=>grid[Math.floor(i.y)]?.[Math.floor(i.x)])'));assert(run('state.enemies.every(e=>grid[Math.floor(e.y)]?.[Math.floor(e.x)]&&!safe(e))'));maps.push(run('JSON.stringify(grid)'));if(ch>=7){assert.equal(run('W'),50);assert.equal(run('H'),43);assert.equal(run('rooms.length'),9);}run('drawMap();drawMinimap();draw(1/60)');}assert.equal(new Set(maps).size,14);
+test('eighteen floors validate and expanded geometry has no embedded fixtures or spawns',()=>{
+ const maps=[];for(let ch=0;ch<18;ch++){run(`state=campaignState(${ch})`);assert(run('valid(state)'));assert(run('state.items.every(i=>grid[Math.floor(i.y)]?.[Math.floor(i.x)])'));assert(run('state.enemies.every(e=>grid[Math.floor(e.y)]?.[Math.floor(e.x)]&&!safe(e))'));maps.push(run('JSON.stringify(grid)'));if(ch>=7){assert.equal(run('W'),50);assert.equal(run('H'),43);assert.equal(run('rooms.length'),9);}run('drawMap();drawMinimap();draw(1/60)');}assert.equal(new Set(maps).size,18);
 });
 test('new objective gates refuse early entry and wrong sequences recover without resource loss',()=>{
  for(const ch of [7,8,11,12,13]){run(`state=campaignState(${ch});longAction(state.items.find(i=>i.id==='exit'));longAction(state.items.find(i=>i.id==='access'))`);assert(!run('state.won'));assert(run('state.doors.filter(d=>d.requires).every(d=>d.locked)'));run('for(const id of ["key","record","route"])longAction(state.items.find(i=>i.id===id));longAction(state.items.find(i=>i.id===chapters[state.chapter].order[1]))');assert.equal(run('state.quest.sequence.length'),0);run('for(const id of chapters[state.chapter].order)longAction(state.items.find(i=>i.id===id));longAction(state.items.find(i=>i.id==="access"))');assert(run('state.doors.filter(d=>d.requires==="access").every(d=>!d.locked)'));assert(run('state.doors.filter(d=>d.requires==="release").every(d=>d.locked)'));assert(run('valid(state)'));}
@@ -134,16 +134,16 @@ test('campaign journal closes back to completion without resuming a finished exp
  run('state=campaignState(13);mode="complete";openJournal();closeFieldJournal()');assert.equal(run('mode'),'complete');run('mode="pause";openJournal();closeFieldJournal()');assert.equal(run('mode'),'pause');
 });
 test('the final chapter has a finite three-page epilogue and no further relay',()=>{
- run('state=campaignState(13);completeChapter()');assert.equal(run('mode'),'prologue');assert.equal(run('endingPages.length'),3);run('finishPrologue();nextChapter()');assert.equal(run('state.chapter'),13);assert.equal(run('mode'),'complete');assert(run('chapters[13].ending.includes("THE END")'));run('startIntro(true);finishPrologue()');assert.equal(run('mode'),'complete');
+ run('state=campaignState(17);completeChapter()');assert.equal(run('mode'),'prologue');assert.equal(run('endingPages.length'),3);run('finishPrologue();nextChapter()');assert.equal(run('state.chapter'),17);assert.equal(run('mode'),'complete');assert(run('chapters[17].ending.includes("THE END")'));run('startIntro(true);finishPrologue()');assert.equal(run('mode'),'complete');
 });
 test('new save rejects impossible quest dependencies and malformed circuit state',()=>{
  run('state=campaignState(7);state.quest.done=["release"]');assert(!run('valid(state)'));run('state.quest.done=[];state.quest.circuit=NaN');assert(!run('valid(state)'));run('state.quest.circuit=0;state.keepsakes=[7,7]');assert(!run('valid(state)'));
 });
 test('new art is embedded byte-for-byte and every new chapter has unique local lore',()=>{
- assert(Buffer.from(run('longNightSource').split(',')[1],'base64').equals(fs.readFileSync(new URL('../art/long-night/scenes.png',import.meta.url))));const titles=[];for(let ch=7;ch<14;ch++){run(`state=campaignState(${ch})`);titles.push(...run('state.items.filter(i=>i.id.startsWith("lore-")).map(i=>i.name)'));}assert.equal(new Set(titles).size,21);
+ assert(Buffer.from(run('longNightSource').split(',')[1],'base64').equals(fs.readFileSync(new URL('../art/long-night/scenes.png',import.meta.url))));const titles=[];for(let ch=7;ch<18;ch++){run(`state=campaignState(${ch})`);titles.push(...run('state.items.filter(i=>i.id.startsWith("lore-")).map(i=>i.name)'));}assert.equal(new Set(titles).size,33);
 });
-test('all fourteen floors maintain decoration clearance at doors',()=>{
- for(let ch=0;ch<14;ch++){run(`state=campaignState(${ch})`);assert(run('sceneryForChapter().every(p=>doorwayClear(p.x,p.y,p.type==="pipes"?.5:.9,.8))'));assert(run('rooms.flatMap(r=>roomCabinets(r)).every(p=>doorwayClear(p.x,p.z,1.4,.94))'));}
+test('all eighteen floors maintain decoration clearance at doors',()=>{
+ for(let ch=0;ch<18;ch++){run(`state=campaignState(${ch})`);assert(run('sceneryForChapter().every(p=>doorwayClear(p.x,p.y,p.type==="pipes"?.5:.9,.8))'));assert(run('rooms.flatMap(r=>roomCabinets(r)).every(p=>doorwayClear(p.x,p.z,1.4,.94))'));}
 });
 test('new campaign routes also complete under the 3D aiming contract',()=>{
  run('scene3D={name:"test"}');run(navigation);run(campaignNavigation);console.log('3D Long Night routes:',run(fs.readFileSync(new URL('./long-night-navigation.js',import.meta.url),'utf8')));run('scene3D=null');
@@ -175,6 +175,20 @@ test('health variants distinguish fragile runners, ordinary zombies and tougher 
 });
 test('legacy enemy health migrates once, preserving wounds and dead enemies',()=>{
  run('state=fresh();delete state.combatVersion;state.enemies.forEach(e=>delete e.maxHp);Object.assign(state.enemies[0],{type:"brute",hp:70});state.enemies[1].hp=0;checkpoint=snapshot();loadSave()');assert.equal(run('state.enemies[0].hp'),85);assert.equal(run('state.enemies[0].maxHp'),170);assert.equal(run('state.enemies[1].hp'),0);run('save();loadSave()');assert.equal(run('state.enemies[0].hp'),85);assert(run('valid(state)'));
+});
+test('all chapter transitions have story scenes and preserve gear without firing',()=>{
+ for(let ch=1;ch<18;ch++){run(`state=campaignState(${ch});startChapterScene()`);assert.equal(run('mode'),'prologue');assert.equal(run('chapters[state.chapter].scene.length'),2);run('updateChapterScene(9)');assert.equal(run('storyPage'),1);run('updateChapterScene(9)');assert.equal(run('mode'),'play');assert.equal(run('state.shots'),0);}
+});
+test('chapter scenes pause, honor reduced motion and keep the epilogue readable',()=>{
+ run('state=campaignState(14);startChapterScene();$("introPause").onclick();updateChapterScene(30)');assert.equal(run('storyPage'),0);assert.equal(run('chapterSceneTime'),0);run('$("motionSetting").checked=true;renderChapterScene()');assert.equal(el('introVisual').style.transform,'none');run('$("introPause").onclick();updateChapterScene(9)');assert.equal(run('storyPage'),1);run('state=campaignState(17);completeChapter();updateChapterScene(60)');assert.equal(run('storyPage'),0);assert.equal(run('mode'),'prologue');
+});
+test('new supplies grant distinct consumables once and survive save/load',()=>{
+ run('state=campaignState(14)');const meds=run('state.meds'),bottles=run('state.bottles'),makers=run('state.makers'),ammo=run('state.reserve[0]');
+ for(const kind of ['trauma','distraction','ammunition'])run(`campaignAction(state.items.find(i=>i.id==='evac-supply-${kind}'));campaignAction(state.items.find(i=>i.id==='evac-supply-${kind}'))`);
+ assert.equal(run('state.meds'),meds+2);assert.equal(run('state.bottles'),bottles+3);assert.equal(run('state.makers'),makers+2);assert.equal(run('state.reserve[0]'),ammo+16);assert(run('valid(state)'));run('save();loadSave()');assert(run('state.items.filter(i=>i.id.startsWith("evac-supply-")).every(i=>i.taken)'));
+});
+test('completed former finale continues into evacuation and new art is embedded',()=>{
+ run('state=campaignState(13);state.won=true;checkpoint=snapshot();loadSave();nextChapter()');assert.equal(run('state.chapter'),14);assert.equal(run('mode'),'prologue');assert(Buffer.from(run('evacuationSource').split(',')[1],'base64').equals(fs.readFileSync(new URL('../art/evacuation/scenes.png',import.meta.url))));
 });
 eval(fs.readFileSync(new URL('fixture-checks.js',import.meta.url),'utf8'));
 eval(fs.readFileSync(new URL('audio-checks.js',import.meta.url),'utf8'));
