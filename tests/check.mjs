@@ -206,7 +206,7 @@ test('shooting interrupts melee and dodging makes the committed strike miss',()=
 test('shotgun knocks surviving brutes back without changing the two-shot kill',()=>{
  run('state.p={...state.p,x:23.5,y:4.5,a:0};state.enemies.forEach(e=>e.hp=0);Object.assign(state.enemies[0],{type:"brute",x:25,y:4.5,hp:190});state.owned[1]=true;state.gun=1;fire()');assert(run('state.enemies[0].x')>25);assert(run('state.enemies[0].hp')>0);run('state.cooldown=0;fire()');assert(run('state.enemies[0].hp')<=0);
 });
-test('quickstep is unavailable outside play and its indicator disappears on pause',()=>{run('mode="pause";quickstep();combatReadiness()');assert.equal(run('stepRemaining'),0);assert.equal(el('combatReady').style.opacity,'0');});
+test('quickstep is unavailable outside play and feedback honors comfort settings without shifting aim',()=>{run('mode="pause";quickstep();combatReadiness()');assert.equal(run('stepRemaining'),0);assert.equal(el('combatReady').style.opacity,'0');run('killFlash=1;$("motionSetting").checked=true;$("flashSetting").checked=true;combatReadiness()');assert.equal(el('cross').style.transform,'translate(-50%,-50%) scale(1)');assert.equal(el('cross').style.filter,'none');run('$("motionSetting").checked=false;$("flashSetting").checked=false;combatReadiness()');assert.equal(el('cross').style.transform,'translate(-50%,-50%) scale(1.4)');});
 eval(fs.readFileSync(new URL('fixture-checks.js',import.meta.url),'utf8'));
 eval(fs.readFileSync(new URL('audio-checks.js',import.meta.url),'utf8'));
 console.log(`\n${passed} checks passed. Simulation checks do not replace browser/listening playtests.`);

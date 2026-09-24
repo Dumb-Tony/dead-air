@@ -40,6 +40,6 @@ function combatReadiness(){
  const warning=state.enemies.some(e=>e.hp>0&&e.meleeWindup>0&&dist(e,state.p)<1.6&&sees(state.p,e,2));
  const node=$('combatReady');node.textContent=warning?'INCOMING STRIKE · X EVADE':stepCooldown>0?'QUICKSTEP '+stepCooldown.toFixed(1)+'s':'X QUICKSTEP';
  node.classList.toggle('incoming',warning);node.style.opacity=mode==='play'?'1':'0';
- $('cross').style.transform=$('motionSetting').checked?'none':killFlash>0?'scale(1.4)':hitTimer>0?'scale(1.16)':'scale(1)';
+ $('cross').style.transform='translate(-50%,-50%) '+($('motionSetting').checked?'scale(1)':killFlash>0?'scale(1.4)':hitTimer>0?'scale(1.16)':'scale(1)');
  $('cross').style.filter=killFlash>0&&!$('flashSetting').checked?'drop-shadow(0 0 5px #ffc679)':'none';
 }
