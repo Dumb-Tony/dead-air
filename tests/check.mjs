@@ -190,6 +190,23 @@ test('new supplies grant distinct consumables once and survive save/load',()=>{
 test('completed former finale continues into evacuation and new art is embedded',()=>{
  run('state=campaignState(13);state.won=true;checkpoint=snapshot();loadSave();nextChapter()');assert.equal(run('state.chapter'),14);assert.equal(run('mode'),'prologue');assert(Buffer.from(run('evacuationSource').split(',')[1],'base64').equals(fs.readFileSync(new URL('../art/evacuation/scenes.png',import.meta.url))));
 });
+test('quickstep has a bounded distance, cooldown and no ammunition cost',()=>{
+ run('state.p={...state.p,x:23.5,y:4.5,a:0};keys={KeyW:true};quickstep();updateQuickstep(.16)');assert(Math.abs(run('state.p.x')-24.78)<.001);assert.equal(run('state.shots'),0);assert.equal(run('state.mag[0]'),8);const x=run('state.p.x');run('quickstep();updateQuickstep(.16)');assert.equal(run('state.p.x'),x);run('updateQuickstep(2);keys={KeyS:true};quickstep();updateQuickstep(.16)');assert(Math.abs(run('state.p.x')-23.5)<.001);
+});
+test('quickstep normalizes diagonals and defaults to a backward escape',()=>{
+ run('state.p={...state.p,x:23.5,y:4.5,a:0};keys={KeyW:true,KeyD:true};quickstep();updateQuickstep(.16)');assert(Math.abs(run('Math.hypot(state.p.x-23.5,state.p.y-4.5)')-1.28)<.001);run('resetTransient();state.p.x=23.5;state.p.y=4.5;quickstep();updateQuickstep(.16)');assert(run('state.p.x')<23.5);
+});
+test('impulses cannot tunnel through a closed fire door',()=>{run('state.p={...state.p,x:17.5,y:4.5,a:0};safeImpulse(state.p,6,0)');assert(run('state.p.x')<19);assert(!run('solid(state.p.x,state.p.y)'));});
+test('melee has a readable windup and a single delayed impact',()=>{
+ run('state.p={...state.p,x:23.5,y:4.5};Object.assign(state.enemies[0],{type:"brute",x:24.1,y:4.5,stagger:0,attack:0});enemyMelee(state.enemies[0],.01)');assert.equal(run('state.p.hp'),100);assert.equal(run('state.enemies[0].meleeWindup'),.65);run('enemyMelee(state.enemies[0],.3)');assert.equal(run('state.p.hp'),100);run('enemyMelee(state.enemies[0],.36)');assert.equal(run('state.p.hp'),78);run('enemyMelee(state.enemies[0],.1)');assert.equal(run('state.p.hp'),78);
+});
+test('shooting interrupts melee and dodging makes the committed strike miss',()=>{
+ run('state.p={...state.p,x:23.5,y:4.5};Object.assign(state.enemies[0],{type:"brute",x:24.1,y:4.5,hp:180,stagger:0,attack:0});enemyMelee(state.enemies[0],.01);damageEnemy(state.enemies[0],1);enemyMelee(state.enemies[0],1)');assert.equal(run('state.p.hp'),100);assert.equal(run('state.enemies[0].meleeWindup'),0);run('state.enemies[0].stagger=0;enemyMelee(state.enemies[0],.01);quickstep();updateQuickstep(.16);enemyMelee(state.enemies[0],.7)');assert.equal(run('state.p.hp'),100);
+});
+test('shotgun knocks surviving brutes back without changing the two-shot kill',()=>{
+ run('state.p={...state.p,x:23.5,y:4.5,a:0};state.enemies.forEach(e=>e.hp=0);Object.assign(state.enemies[0],{type:"brute",x:25,y:4.5,hp:190});state.owned[1]=true;state.gun=1;fire()');assert(run('state.enemies[0].x')>25);assert(run('state.enemies[0].hp')>0);run('state.cooldown=0;fire()');assert(run('state.enemies[0].hp')<=0);
+});
+test('quickstep is unavailable outside play and its indicator disappears on pause',()=>{run('mode="pause";quickstep();combatReadiness()');assert.equal(run('stepRemaining'),0);assert.equal(el('combatReady').style.opacity,'0');});
 eval(fs.readFileSync(new URL('fixture-checks.js',import.meta.url),'utf8'));
 eval(fs.readFileSync(new URL('audio-checks.js',import.meta.url),'utf8'));
 console.log(`\n${passed} checks passed. Simulation checks do not replace browser/listening playtests.`);

@@ -1,6 +1,17 @@
-# Dead Air — The Relay Campaign v0.13.0
+# Dead Air — The Relay Campaign v0.14.0
 
 A standalone eighteen-chapter retro zombie FPS with environmental puzzles and a connected story. **[Play Dead Air](https://dumb-tony.github.io/dead-air/)** · [Source repository](https://github.com/Dumb-Tony/dead-air) · [Offline HTML](dist/index.html).
+
+## Combat rhythm — v0.14.0
+
+**[Play the latest build](https://dumb-tony.github.io/dead-air/)**. This pass improves moment-to-moment combat throughout the existing 18-chapter campaign:
+
+- **X quickstep:** a short burst in your movement direction, or backward when stationary. Two-second cooldown, audible footsteps, no invulnerability. Substeps prevent passing through closed doors or walls. A small HUD indicator shows readiness.
+- **Committed zombie strikes:** runners wind up for 0.30 seconds, ordinary infected for 0.45, and brutes for 0.65. Close-range warning text and an amber glow telegraph the strike. Moving out of reach makes it miss; shooting interrupts it. Staggered zombies can no longer land instant melee hits.
+- **Shotgun impact:** surviving enemies recoil and are pushed away; brutes resist most of the push. Collision still applies, and a close-range brute still requires two shots.
+- Stronger hit/kill confirmation at the crosshair. Reduce Motion and Reduce Flashes settings suppress the new motion/glow feedback where appropriate.
+
+139 automated checks pass, including complete 18-chapter input-replay routes in both aiming modes and dedicated evasion, melee, interruption, collision and shotgun regressions. Local browser checks verify actual keyboard firing, quickstep displacement and the cooldown HUD. Existing saves and standalone offline play remain supported. Build sources: `combat-feel.js` and `tests/build-combat-feel.mjs`.
 
 ## The last ambulance — v0.13.0
 

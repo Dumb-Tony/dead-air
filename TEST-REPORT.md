@@ -1,5 +1,11 @@
 # Validation — Dead Air
 
+## v0.14.0 combat rhythm — September 24, 2026
+
+139 checks pass. Complete routes cover all eighteen chapters with active enemies, finite ammunition, puzzles and secrets under both aiming contracts. Seven new regressions cover normalized quickstep distance/cooldown/ammo conservation, backward default, closed-door collision, delayed melee impact, interruption and dodge misses, shotgun knockback with two-shot brute kills, and disabling evasion outside gameplay. These full routes are automated input replays, not manual feel testing.
+
+Local WebGL browser checks used the isolated brute fixture: one real Space press consumed one shell and left the brute alive; X moved the player backward from x=23.5 to x=22.22 without consuming another shell or changing health. The cooldown indicator appeared and returned to ready. Screenshot inspection confirmed the zombie, weapon, minimap and HUD rendered together. Audio reported 32 loaded clips and zero decode errors. The fixture disables enemy movement; melee timing and interruption are covered by the active-enemy simulations and focused regressions.
+
 ## v0.13.0 evacuation act — September 22, 2026
 
 132 automated checks pass. Complete routes cover all 18 chapters under the fallback and WebGL aiming contracts, with ordinary movement, active enemies, finite ammunition, ordered objectives, local secrets and keepsakes. The four new floors also collect all three new supply stashes through the interaction route. Additional regressions verify single-use grants and save/load, completed former-finale continuation, all chapter scenes, automatic advance without shooting, pause, reduced motion and a manually advanced final epilogue. All 18 layouts are unique and maintain fixture/spawn floor placement and doorway decoration clearance.
